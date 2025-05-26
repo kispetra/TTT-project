@@ -12,8 +12,8 @@ if (isset($_POST['submit'])) {
     $email        = trim($_POST['email']);
     $password_raw = $_POST['password'];
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || substr($email, -4) !== '.com') {
-        $register_err = "Email must be valid and end with .com.";
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $register_err = "Email must be valid.";
     } else if (strlen($password_raw) < 7 || !preg_match('/\d/', $password_raw)) {
         $register_err = "Password must be at least 7 characters long and contain at least one number.";
     } else {
