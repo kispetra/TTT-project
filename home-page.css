@@ -1,0 +1,179 @@
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cardo', serif;
+            background: url('./img/old-parchment-texture.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #f4ecd8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px 10px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2em;
+            color: #d4af37;
+            text-shadow: 1px 1px 4px black;
+        }
+
+        .description {
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #f0e2c6;
+            animation: fadeIn 2s ease;
+        }
+
+         .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: rgba(182, 159, 138, 0.6);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .nav-icon {
+            background: none;
+            border: none;
+            height: 36px;
+            width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-icon img {
+            height: 28px;
+            width: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-icon img:hover {
+            transform: scale(1.2);
+        }
+
+        .nav-add {
+            background-color:rgb(199, 148, 72);
+            height: 65px;
+            width: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-20px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-add:hover {
+            transform: translateY(-25px) scale(1.1);
+        }
+
+        .nav-add img {
+            height: 30px;
+            width: 30px;
+        }
+
+        .dice-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background-color: rgba(182, 159, 138, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+            animation: fadeIn 2.5s ease;
+        }
+
+        .dice {
+            height: 50px;
+            width: 50px;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: sepia(1) hue-rotate(15deg) saturate(2) brightness(1.1);
+        }
+
+        .dice-container:hover .dice {
+            filter: sepia(1) hue-rotate(10deg) saturate(2.5) brightness(0.7);
+        }
+
+        .dice-number {
+            margin-top: 8px;
+            font-size: 1.0em;
+            font-weight: bold;
+            color: #4b2e1e;
+        }
+
+        .dice-container:hover {
+            transform: scale(1.05);
+        }
+
+        .dice-container:hover .dice {
+            filter: brightness(0.8) sepia(1) hue-rotate(-20deg) saturate(2);
+        }
+
+        @keyframes rollAnimation {
+            0% {
+                transform: rotate(0);
+            }
+
+            25% {
+                transform: rotate(180deg);
+            }
+
+            50% {
+                transform: rotate(360deg);
+            }
+
+            100% {
+                transform: rotate(720deg);
+            }
+        }
+
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .roll {
+            animation: rollAnimation 0.8s ease-in-out;
+        }

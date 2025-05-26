@@ -14,11 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->fetch()) {
         if (password_verify($password, $hashed_password)) {
             $_SESSION['loggedin'] = true;
-            $_SESSION['id'] = $id;
+            $_SESSION['user_id'] = $id;
             $_SESSION['first_name'] = $first_name;
             $_SESSION['last_name'] = $last_name;
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
+            header("Location: home-page.php");
             exit;
         } else {
             $login_err = "Invalid password.";
