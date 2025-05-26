@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+$success_msg = '';
+if (isset($_SESSION['success_msg'])) {
+    $success_msg = $_SESSION['success_msg'];
+    unset($_SESSION['success_msg']);
+}
 require_once 'db.php';
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -17,7 +23,7 @@ $stmt->fetch();
 $stmt->close();
 
 $characters = [];
-$stmt = $con->prepare("SELECT character_id, character_name, level, alignment, character_class FROM characters WHERE user_id = ?");
+$stmt = $con->prepare("SELECT character_name, level, alignment, character_class, background, species FROM characters WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();

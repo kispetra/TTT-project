@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    session_unset();
+    session_destroy();
+    session_start(); 
+}
+
 require_once 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $con->prepare("SELECT user_id, first_name, last_name, username, email, password FROM users WHERE email = ? OR username = ?");
     $stmt->bind_param("ss", $emailOrUsername, $emailOrUsername);
     $stmt->execute();
-    $stmt->bind_result($id, $first_name, $last_name, $username, $email, $hashed_password);
+    $stmt->bind_result($user_id, $first_name, $last_name, $username, $email, $hashed_password);
 
     if ($stmt->fetch()) {
         if (password_verify($password, $hashed_password)) {
