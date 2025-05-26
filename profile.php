@@ -23,7 +23,7 @@ $stmt->fetch();
 $stmt->close();
 
 $characters = [];
-$stmt = $con->prepare("SELECT character_name, level, alignment, character_class, background, species FROM characters WHERE user_id = ?");
+$stmt = $con->prepare("SELECT character_id, character_name, level, alignment, character_class, background, species FROM characters WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -185,10 +185,10 @@ $stmt->close();
                     .then(response => response.json())
                     .then(data => {
                         const content = `
-                        <p><strong>Name:</strong> ${data.character_name}</p>
-                        <p><strong>Level:</strong> ${data.level}</p>
-                        <p><strong>Alignment:</strong> ${data.alignment}</p>
-                        <p><strong>Class:</strong> ${data.character_class}</p>
+                        <p><strong>Name:&nbsp;</strong> ${data.character_name}</p>
+                        <p><strong>Level:&nbsp;</strong> ${data.level}</p>
+                        <p><strong>Alignment:&nbsp;</strong> ${data.alignment}</p>
+                        <p><strong>Class:&nbsp;</strong> ${data.character_class}</p>
                     `;
                         document.getElementById('info-content').innerHTML = content;
                     })
