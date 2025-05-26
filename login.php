@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
 require_once 'db.php';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailOrUsername = $_POST['emailOrUsername'];
     $password = $_POST['password'];
@@ -21,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->fetch()) {
         if (password_verify($password, $hashed_password)) {
             $_SESSION['loggedin'] = true;
-            $_SESSION['user_id'] = $id;
+            $_SESSION['user_id'] = $user_id;
             $_SESSION['first_name'] = $first_name;
             $_SESSION['last_name'] = $last_name;
             $_SESSION['username'] = $username;

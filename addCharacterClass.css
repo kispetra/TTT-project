@@ -1,0 +1,55 @@
+body {
+    font-family: 'Cardo', serif;
+    background: url('./img/old-parchment-texture.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #4b2e1e;
+    padding-bottom: 80px;
+}
+
+h2 {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    margin-top: 30px;
+    color: #d4af37;
+    text-shadow: 1px 1px 3px black;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.88);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+}
+
+.btn-primary {
+    background-color: rgb(199, 148, 72);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: rgb(175, 125, 55);
+}
+
+/* Modal styling */
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+}
+
+.modal-title {
+    font-family: 'Cinzel', serif;
+    color: #4b2e1e;
+}
+
+.class-btn {
+    font-family: 'Cardo', serif;
+    background-color: #f8f4ed;
+    border-color: #d4af37;
+    color: #4b2e1e;
+}
+
+.class-btn:hover {
+    background-color: #e2c98f;
+    color: #000;
+}

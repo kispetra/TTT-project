@@ -41,6 +41,14 @@ $stmt->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - <?= htmlspecialchars($username) ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+      <style>
+        #toastContainer {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1100;
+    }
+</style>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="profile.css">
 </head>
@@ -62,7 +70,8 @@ $stmt->close();
                         <th>Name</th>
                         <th>Level</th>
                         <th>Alignment</th>
-                        <th></th>
+                        <th>Class</th>
+                        <th>Update</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,12 +80,16 @@ $stmt->close();
                             <td><?= htmlspecialchars($char['character_name']) ?></td>
                             <td><?= htmlspecialchars($char['level']) ?></td>
                             <td><?= htmlspecialchars($char['alignment']) ?></td>
+                            <td><?= htmlspecialchars($char['character_class']) ?></td>
                             <td>
                                 <button
                                     class="btn btn-sm btn-custom edit-btn"
                                     data-name="<?= htmlspecialchars($char['character_name']) ?>"
                                     data-level="<?= htmlspecialchars($char['level']) ?>"
                                     data-alignment="<?= htmlspecialchars($char['alignment']) ?>"
+                                    data-class="<?= htmlspecialchars($char['character_class']) ?>"
+                                    data-background="<?= htmlspecialchars($char['background']) ?>"
+                                    data-species="<?= htmlspecialchars($char['species']) ?>"
                                     data-id="<?= $char['character_id'] ?? 0 ?>"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editModal">
@@ -129,6 +142,65 @@ $stmt->close();
                                         <option value="Chaotic evil">Chaotic evil</option>
                                     </select>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label for="char-character_class" class="form-label">Class</label>
+                                    <select class="form-select" name="character_class" id="char-character_class" required>
+                                        <option value="">Select class: </option>
+                                        <option value="Barbarian">Barbarian</option>
+                                        <option value="Bard">Bard</option>
+                                        <option value="Cleric">Cleric</option>
+                                        <option value="Druid">Druid</option>
+                                        <option value="Fighter">Fighter</option>
+                                        <option value="Monk">Monk</option>
+                                        <option value="Paladin">Paladin</option>
+                                        <option value="Ranger">Ranger</option>
+                                        <option value="Rogue">Rogue</option>
+                                        <option value="Sorcerer">Sorcerer</option>
+                                        <option value="Warlock">Warlock</option>
+                                        <option value="Wizard">Wizard</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="char-background" class="form-label">Background</label>
+                                    <select class="form-select" name="background" id="char-background" required>
+                                        <option value="">Select background: </option>
+                                        <option value="Acolyte">Acolyte</option>
+                                        <option value="Artisan">Artisan</option>
+                                        <option value="Charlatan">Charlatan</option>
+                                        <option value="Criminal">Criminal</option>
+                                        <option value="Entertainer">Entertainer</option>
+                                        <option value="Farmer">Farmer</option>
+                                        <option value="Guard">Guard</option>
+                                        <option value="Guide">Guide</option>
+                                        <option value="Hermit">Hermit</option>
+                                        <option value="Merchant">Merchant</option>
+                                        <option value="Noble">Noble</option>
+                                        <option value="Sage">Sage</option>
+                                        <option value="Sailor">Sailor</option>
+                                        <option value="Scribe">Scribe</option>
+                                        <option value="Soldier">Soldier</option>
+                                        <option value="Wayfarer">Wayfarer</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="char-species" class="form-label">Species</label>
+                                    <select class="form-select" name="species" id="char-species" required>
+                                        <option value="">Select species: </option>
+                                        <option value="Aasimar">Aasimar</option>
+                                        <option value="Dragonborn">Dragonborn</option>
+                                        <option value="Dwarf">Dwarf</option>
+                                        <option value="Elf">Elf</option>
+                                        <option value="Gnome">Gnome</option>
+                                        <option value="Goliath">Goliath</option>
+                                        <option value="Halfling">Halfling</option>
+                                        <option value="Human">Human</option>
+                                        <option value="Orc">Orc</option>
+                                        <option value="Tiefling">Tiefling</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success">Save</button>
@@ -159,7 +231,7 @@ $stmt->close();
         <a href="home-page.php" class="nav-icon">
             <img src="./img/home.png" alt="Home" />
         </a>
-        <a href="add-character.php" class="nav-add">
+        <a href="addCharacter.php" class="nav-add">
             <img src="./img/add.png" alt="Dodaj" />
         </a>
         <a href="profile.php" class="nav-icon">
@@ -174,6 +246,9 @@ $stmt->close();
                 document.getElementById('char-name').value = button.dataset.name;
                 document.getElementById('char-level').value = button.dataset.level;
                 document.getElementById('char-alignment').value = button.dataset.alignment;
+                document.getElementById('char-character_class').value = button.dataset.class;
+                document.getElementById('char-background').value = button.dataset.background;
+                document.getElementById('char-species').value = button.dataset.species;
                 document.getElementById('delete-link').href = `delete-character.php?id=${button.dataset.id}`;
             });
         });
@@ -202,3 +277,5 @@ $stmt->close();
 
 
 </html>
+
+

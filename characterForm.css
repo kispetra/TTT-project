@@ -1,0 +1,69 @@
+/* Osnovni stil pozadine i fonta */
+body {
+    font-family: 'Cardo', serif;
+    background: url('./img/old-parchment-texture.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #5c4033;
+    margin: 0;
+    padding: 0;
+}
+
+/* Omot za formu */
+.form-container {
+    max-width: 500px;
+    margin: 60px auto;
+    background-color: rgba(182, 159, 138, 0.6);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Naslov forme */
+h2.page-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #d4af37;
+    font-family: 'Cinzel', serif;
+    text-shadow: 1px 1px 3px black;
+    margin-bottom: 25px;
+}
+
+/* Polja i labela */
+label {
+    color: #5c4033;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+    border: 2px solid #5c4033;
+    color: #3e2a1e;
+    background-color: #f9f6f1;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+input.form-control:focus,
+select.form-select:focus,
+textarea.form-control:focus {
+    border-color: #3e2a1e;
+    box-shadow: 0 0 5px rgba(92, 64, 51, 0.5);
+}
+
+/* Dugme za submit */
+.btn-submit {
+    background-color: #c79448;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #a3732e;
+    color: #fff;
+}
