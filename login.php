@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    session_unset();
+    session_destroy();
+    session_start(); 
+}
+
 require_once 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,17 +16,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $con->prepare("SELECT user_id, first_name, last_name, username, email, password FROM users WHERE email = ? OR username = ?");
     $stmt->bind_param("ss", $emailOrUsername, $emailOrUsername);
     $stmt->execute();
-    $stmt->bind_result($id, $first_name, $last_name, $username, $email, $hashed_password);
+    $stmt->bind_result($user_id, $first_name, $last_name, $username, $email, $hashed_password);
 
     if ($stmt->fetch()) {
         if (password_verify($password, $hashed_password)) {
             $_SESSION['loggedin'] = true;
-            $_SESSION['id'] = $id;
+            $_SESSION['user_id'] = $user_id;
             $_SESSION['first_name'] = $first_name;
             $_SESSION['last_name'] = $last_name;
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
-            exit;
+            //exit;
+            header('Location: addCharacter.php');
         } else {
             $login_err = "Invalid password.";
         }
