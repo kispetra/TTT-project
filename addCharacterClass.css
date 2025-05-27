@@ -6,14 +6,11 @@ body {
     padding-bottom: 80px;
 }
 
-h2 {
-    font-family: 'Cinzel', serif;
-    text-align: center;
-    margin-top: 30px;
-    color: #d4af37;
-    text-shadow: 1px 1px 3px black;
+.modal-header {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 15px;
+            color: #5c4033;
 }
-
 .container {
     background-color: rgba(255, 255, 255, 0.88);
     padding: 30px;
@@ -22,34 +19,63 @@ h2 {
     max-width: 600px;
 }
 
+label {
+    color: #5c4033;
+    font-weight: bold;
+}
+
+.modal-body input.form-control,
+.modal-body select.form-select {
+    border: 2px solid #5c4033 !important;
+    color: #3e2a1e;
+    background-color: #f9f6f1 !important;
+    box-shadow: none;
+}
+
 .btn-primary {
-    background-color: rgb(199, 148, 72);
+    background-color: rgba(182, 159, 138, 0.6);
     border: none;
+    transition: background-color 0.3s ease;
+    color: #3e2a1e;
 }
 
 .btn-primary:hover {
-    background-color: rgb(175, 125, 55);
+    background-color: rgba(182, 159, 138, 0.8);
+}
+.class-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* Modal styling */
-.modal-content {
-    background-color: rgba(255, 255, 255, 0.95);
+.class-option {
+    border: 2px solid #bda271;
     border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background-color: #fdfaf4;
+    transition: background-color 0.3s ease, border 0.3s ease;
 }
 
-.modal-title {
+.class-option:hover {
+    background-color: #f3e5c8;
+}
+
+.class-option.selected {
+    border-color: #d4af37;
+    background-color: #fff8e1;
+}
+
+.class-option h5 {
+    margin-bottom: 8px;
     font-family: 'Cinzel', serif;
     color: #4b2e1e;
 }
 
-.class-btn {
+.class-option p {
+    margin: 0;
     font-family: 'Cardo', serif;
-    background-color: #f8f4ed;
-    border-color: #d4af37;
-    color: #4b2e1e;
+    color: #3e2a1e;
+    font-size: 0.95rem;
 }
 
-.class-btn:hover {
-    background-color: #e2c98f;
-    color: #000;
-}
