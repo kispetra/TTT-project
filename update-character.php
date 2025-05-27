@@ -14,8 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $level = $_POST['level'] ?? null;
     $alignment = trim($_POST['alignment'] ?? '');
+    $character_class = trim($_POST['character_class'] ?? '');
+    $background = trim($_POST['background'] ?? '');
+    $species = trim($_POST['species'] ?? '');
+    $subspecies = $_POST['subspecies'] ?? null;
 
-    if (!$id || !$name || !$level || !$alignment) {
+    if (!$id || !$name || !$level || !$alignment || !$character_class || !$background || !$species) {
         $_SESSION['error'] = "Svi podaci su obavezni!";
         header("Location: profile.php");
         exit;
@@ -33,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->close();
 
-    $stmt = $con->prepare("UPDATE characters SET character_name = ?, level = ?, alignment = ? WHERE character_id = ?");
-    $stmt->bind_param("sisi", $name, $level, $alignment, $id);
+    $stmt = $con->prepare("UPDATE characters SET character_name = ?, level = ?, alignment = ?, character_class = ?, background = ?, species = ?, subspecies = ?  WHERE character_id = ?");
+    $stmt->bind_param("sisssssi", $name, $level, $alignment, $character_class, $background, $species, $subspecies, $id);
 
     if ($stmt->execute()) {
         $_SESSION['success'] = "Lik je uspješno ažuriran.";
