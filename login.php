@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
 require_once 'db.php';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailOrUsername = $_POST['emailOrUsername'];
     $password = $_POST['password'];

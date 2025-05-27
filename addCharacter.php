@@ -31,18 +31,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     <meta charset="UTF-8">
     <title>Create Character</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./addCharacter.css">
+
 </head>
 <body>
 
-<div class="container mt-5">
-    <h2>Create Your Character</h2>
+<div class="modal-wrapper">
+    <div class="container character-form-container">
+    <h2 class="modal-header">Create Your Character</h2>
     <?php if (!empty($success_msg)): ?>
         <div class="alert alert-success"><?= htmlspecialchars($success_msg) ?></div>
     <?php elseif (!empty($error_msg)): ?>
         <div class="alert alert-danger"><?= htmlspecialchars($error_msg) ?></div>
     <?php endif; ?>
+
     <form method="post" action="addCharacter.php"> 
 
+    <div class="modal-body">
         <div class="mb-3">
             <label for="character_name" class="form-label">Character Name</label>
             <input type="text" class="form-control" id="character_name" name="character_name" required>
@@ -54,38 +59,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Alignment</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="alignment" name="alignment" required>
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#alignmentModal">Choose</button>
-            </div>
+            <label for="alignment" class="form-label">Alignment</label>
+        <select class="form-select" id="alignment" name="alignment" required>
+            <option value="" disabled selected>Choose alignment</option>
+            <option value="Lawful Good">Lawful Good</option>
+            <option value="Neutral Good">Neutral Good</option>
+            <option value="Chaotic Good">Chaotic Good</option>
+            <option value="Lawful Neutral">Lawful Neutral</option>
+            <option value="True Neutral">True Neutral</option>
+            <option value="Chaotic Neutral">Chaotic Neutral</option>
+            <option value="Lawful Evil">Lawful Evil</option>
+            <option value="Neutral Evil">Neutral Evil</option>
+            <option value="Chaotic Evil">Chaotic Evil</option>
+        </select>
         </div>
-        <button type="submit" name="next" class="btn btn-primary">Next</button>
+        <div class="text-end mt-3">
+        <button type="submit" name="next" class="btn btn-next">Next</button>
+    </div>
+    </div>
     </form>
-</div>
-
-<div class="modal fade" id="alignmentModal" tabindex="-1" aria-labelledby="alignmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Select Alignment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <?php
-                $alignments = [
-                    "Lawful Good", "Neutral Good", "Chaotic Good",
-                    "Lawful Neutral", "True Neutral", "Chaotic Neutral",
-                    "Lawful Evil", "Neutral Evil", "Chaotic Evil"
-                ];
-                foreach ($alignments as $alignment) {
-                    echo "<button type='button' class='btn btn-outline-dark w-100 mb-2 alignment-btn' data-value='$alignment'>$alignment</button>";
-                }
-                ?>
-            </div>
-        </div>
     </div>
 </div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

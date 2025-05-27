@@ -47,7 +47,6 @@ $stmt->close();
             top: 1rem;
             right: 1rem;
             z-index: 1100;
-        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="profile.css">
@@ -203,14 +202,12 @@ $stmt->close();
                                         <option value="Tiefling">Tiefling</option>
                                     </select>
                                 </div>
-
                                 <div class="mb-3">
                                     <label for="char-subspecies" class="form-label">Subspecies</label>
                                     <div id="subspecies-container">
                                         <!-- JS će ovdje dinamički ubaciti dropdown ili tekst -->
                                     </div>
                                 </div>
-
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success">Save</button>
@@ -349,5 +346,4 @@ $stmt->close();
 
 
 </body>
-
 </html>

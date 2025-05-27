@@ -1,0 +1,81 @@
+body {
+    font-family: 'Cardo', serif;
+    background: url('./img/old-parchment-texture.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #4b2e1e;
+    padding-bottom: 80px;
+}
+
+.modal-header {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 15px;
+            color: #5c4033;
+}
+.container {
+    background-color: rgba(255, 255, 255, 0.88);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+}
+
+label {
+    color: #5c4033;
+    font-weight: bold;
+}
+
+.modal-body input.form-control,
+.modal-body select.form-select {
+    border: 2px solid #5c4033 !important;
+    color: #3e2a1e;
+    background-color: #f9f6f1 !important;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: rgba(182, 159, 138, 0.6);
+    border: none;
+    transition: background-color 0.3s ease;
+    color: #3e2a1e;
+}
+
+.btn-primary:hover {
+    background-color: rgba(182, 159, 138, 0.8);
+}
+.class-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.class-option {
+    border: 2px solid #bda271;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background-color: #fdfaf4;
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.class-option:hover {
+    background-color: #f3e5c8;
+}
+
+.class-option.selected {
+    border-color: #d4af37;
+    background-color: #fff8e1;
+}
+
+.class-option h5 {
+    margin-bottom: 8px;
+    font-family: 'Cinzel', serif;
+    color: #4b2e1e;
+}
+
+.class-option p {
+    margin: 0;
+    font-family: 'Cardo', serif;
+    color: #3e2a1e;
+    font-size: 0.95rem;
+}
+
