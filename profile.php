@@ -23,7 +23,7 @@ $stmt->fetch();
 $stmt->close();
 
 $characters = [];
-$stmt = $con->prepare("SELECT character_id, character_name, level, alignment, character_class, background, species FROM characters WHERE user_id = ?");
+$stmt = $con->prepare("SELECT character_id, character_name, level, alignment, character_class, background, species, subspecies FROM characters WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -41,14 +41,13 @@ $stmt->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - <?= htmlspecialchars($username) ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-      <style>
+    <style>
         #toastContainer {
             position: fixed;
             top: 1rem;
             right: 1rem;
             z-index: 1100;
-    }
-</style>
+    </style>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="profile.css">
 </head>
@@ -58,7 +57,7 @@ $stmt->close();
     <div class="container">
         <p class="container-name">Welcome, <?= htmlspecialchars($first_name) ?>!</p>
     </div>
-    <p>Username:  <strong><?= htmlspecialchars($username) ?></strong></p>
+    <p>Username: <strong><?= htmlspecialchars($username) ?></strong></p>
     <div class="container-table">
         <h4>Your Characters</h4>
         <?php if (empty($characters)): ?>
@@ -90,11 +89,13 @@ $stmt->close();
                                     data-class="<?= htmlspecialchars($char['character_class']) ?>"
                                     data-background="<?= htmlspecialchars($char['background']) ?>"
                                     data-species="<?= htmlspecialchars($char['species']) ?>"
+                                    data-subspecies="<?= htmlspecialchars($char['subspecies'] ?? '') ?>"
                                     data-id="<?= $char['character_id'] ?? 0 ?>"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editModal">
                                     Edit
                                 </button>
+
                                 <button
                                     class="btn btn-sm btn-custom info-btn"
                                     data-id="<?= $char['character_id'] ?>"
@@ -130,16 +131,16 @@ $stmt->close();
                                     <label for="char-alignment" class="form-label">Alignment</label>
                                     <select class="form-select" name="alignment" id="char-alignment" required>
                                         <option value="">Select alignment: </option>
-                                        <option value="Lawful good">Lawful good</option>
-                                        <option value="Lawful neutral">Lawful neutral</option>
-                                        <option value="Lawful bad">Lawful bad</option>
+                                        <option value="Lawful Good">Lawful Good</option>
+                                        <option value="Lawful Neutral">Lawful Neutral</option>
+                                        <option value="Lawful Evil">Lawful Evil</option>
                                         <option value="Unaligned">Unaligned</option>
-                                        <option value="Neutral good">Neutral good</option>
+                                        <option value="Neutral Good">Neutral Good</option>
                                         <option value="Neutral">Neutral</option>
-                                        <option value="Neutral evil">Neutral evil</option>
-                                        <option value="Chaotic good">Chaotic good</option>
-                                        <option value="Chaotic neutral">Chaotic neutral</option>
-                                        <option value="Chaotic evil">Chaotic evil</option>
+                                        <option value="Neutral Evil">Neutral Evil</option>
+                                        <option value="Chaotic Good">Chaotic Good</option>
+                                        <option value="Chaotic Neutral">Chaotic Neutral</option>
+                                        <option value="Chaotic Evil">Chaotic Evil</option>
                                     </select>
                                 </div>
 
@@ -201,6 +202,12 @@ $stmt->close();
                                         <option value="Tiefling">Tiefling</option>
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="char-subspecies" class="form-label">Subspecies</label>
+                                    <div id="subspecies-container">
+                                        <!-- JS će ovdje dinamički ubaciti dropdown ili tekst -->
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success">Save</button>
@@ -248,10 +255,13 @@ $stmt->close();
                 document.getElementById('char-alignment').value = button.dataset.alignment;
                 document.getElementById('char-character_class').value = button.dataset.class;
                 document.getElementById('char-background').value = button.dataset.background;
-                document.getElementById('char-species').value = button.dataset.species;
+                document.getElementById('char-species').value = button.dataset.species || '';
+                toggleSubspeciesField(button.dataset.species);
+                document.getElementById('char-subspecies').value = button.dataset.subspecies || '';
                 document.getElementById('delete-link').href = `delete-character.php?id=${button.dataset.id}`;
             });
         });
+
         document.querySelectorAll('.info-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const charId = button.dataset.id;
@@ -260,11 +270,14 @@ $stmt->close();
                     .then(response => response.json())
                     .then(data => {
                         const content = `
-                        <p><strong>Name:&nbsp;</strong> ${data.character_name}</p>
-                        <p><strong>Level:&nbsp;</strong> ${data.level}</p>
-                        <p><strong>Alignment:&nbsp;</strong> ${data.alignment}</p>
-                        <p><strong>Class:&nbsp;</strong> ${data.character_class}</p>
-                    `;
+                            <p><strong>Name:&nbsp</strong> ${data.character_name}</p>
+                            <p><strong>Level:&nbsp</strong> ${data.level}</p>
+                            <p><strong>Alignment:&nbsp</strong> ${data.alignment}</p>
+                            <p><strong>Class:&nbsp</strong> ${data.character_class}</p>
+                            <p><strong>Background:&nbsp</strong> ${data.background}</p>
+                            <p><strong>Species:&nbsp</strong> ${data.species}</p>
+                            ${data.subspecies ? `<p><strong>Subspecies:&nbsp</strong> ${data.subspecies}</p>` : ''}
+                        `;
                         document.getElementById('info-content').innerHTML = content;
                     })
                     .catch(err => {
@@ -273,9 +286,64 @@ $stmt->close();
             });
         });
     </script>
+    <script>
+        function toggleSubspeciesField(species) {
+            const container = document.getElementById('subspecies-container');
+            container.innerHTML = '';
+
+            const hasSubspecies = checkIfSpeciesHasSubspecies(species);
+
+            if (hasSubspecies) {
+                const select = document.createElement('select');
+                select.className = 'form-select';
+                select.name = 'subspecies';
+                select.id = 'char-subspecies';
+
+                const options = getSubspeciesOptions(species);
+                options.forEach(sub => {
+                    const opt = document.createElement('option');
+                    opt.value = sub;
+                    opt.textContent = sub;
+                    select.appendChild(opt);
+                });
+
+                container.appendChild(select);
+            } else {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.name = 'subspecies';
+                input.id = 'char-subspecies';
+                input.value = 'No subspecies';
+                input.readOnly = true;
+
+                container.appendChild(input);
+            }
+        }
+
+        function checkIfSpeciesHasSubspecies(species) {
+            const speciesWithSub = ['Dragonborn', 'Elf', 'Gnome', 'Goliath', 'Tiefling'];
+            return speciesWithSub.includes(species);
+        }
+
+        function getSubspeciesOptions(species) {
+            const subspeciesMap = {
+                Dragonborn: ["Black", "Blue", "Brass", "Bronze", "Copper"],
+                Elf: ["High", "Wood", "Drow"],
+                Gnome: ["Forest", "Rock"],
+                Goliath: ["Cloud", "Fire", "Frost", "Hill", "Stone", "Storm"],
+                Tiefling: ["Abyssal", "Chthonic", "Internal"]
+            };
+            return subspeciesMap[species] || [];
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('char-species').addEventListener('change', function() {
+                toggleSubspeciesField(this.value);
+            });
+        });
+    </script>
+
+
 </body>
-
-
 </html>
-
-

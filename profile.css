@@ -192,3 +192,9 @@
      height: 30px;
      width: 30px;
  }
+
+select.form-select {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
