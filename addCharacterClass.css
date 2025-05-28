@@ -32,14 +32,15 @@ label {
     box-shadow: none;
 }
 
-.btn-primary {
+.btn-next {
     background-color: rgba(182, 159, 138, 0.6);
     border: none;
     transition: background-color 0.3s ease;
     color: #3e2a1e;
+    font-weight: bold;
 }
 
-.btn-primary:hover {
+.btn-next:hover {
     background-color: rgba(182, 159, 138, 0.8);
 }
 .class-list {
@@ -77,5 +78,18 @@ label {
     font-family: 'Cardo', serif;
     color: #3e2a1e;
     font-size: 0.95rem;
+}
+
+/* .btn-custom-disabled {
+    background-color: rgba(182, 159, 138, 0.3);
+    color: #3e2a1e;
+    border: none;
+    pointer-events: none;
+} */
+
+.alert {
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 12px;
 }
 

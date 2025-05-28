@@ -43,6 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     <?php endif; ?>
 
     <form method="post" action="addCharacterClass.php" id="classForm">
+        <div id="classAlert" class="alert alert-danger mt-3 d-none" role="alert">
+            Please select a class before proceeding.
+        </div>
+
+        
         <input type="hidden" name="character_class" id="selectedClass">
 
         <div class="class-list">
@@ -74,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
         </div>
 
         <div class="text-end mt-4">
-            <button type="submit" name="next" class="btn btn-primary" disabled id="nextBtn">Next</button>
+            <button type="submit" name="next" class="btn btn-next" id="nextBtn">Next</button>
         </div>
     </form>
 </div>
@@ -83,6 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     const classOptions = document.querySelectorAll('.class-option');
     const selectedInput = document.getElementById('selectedClass');
     const nextBtn = document.getElementById('nextBtn');
+    const form = document.getElementById('classForm');
+    const alertBox = document.getElementById('classAlert');
+
+    // Default styling
+    nextBtn.classList.add('btn-custom-disabled');
 
     classOptions.forEach(option => {
         option.addEventListener('click', () => {
@@ -90,9 +100,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
             option.classList.add('selected');
             selectedInput.value = option.dataset.class;
             nextBtn.disabled = false;
+            alertBox.classList.add('d-none');
+            nextBtn.classList.remove('btn-custom-disabled');
         });
     });
+
+    form.addEventListener('submit', function (e) {
+        if (!selectedInput.value) {
+            e.preventDefault();
+            alertBox.classList.remove('d-none');
+            window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        }
+    });
 </script>
+
 
 </body>
 </html>

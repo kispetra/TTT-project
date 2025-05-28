@@ -8,6 +8,10 @@ if (isset($_SESSION['success_msg'])) {
 }
 require_once 'db.php';
 
+function shortenName($name) {
+    return mb_strlen($name) > 10 ? mb_substr($name, 0, 10) . '...' : $name;
+}
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
@@ -24,6 +28,9 @@ $stmt->close();
 
 $characters = [];
 $stmt = $con->prepare("SELECT character_id, character_name, level, alignment, character_class, background, species, subspecies FROM characters WHERE user_id = ?");
+if (!$stmt) {
+    die("Prepare failed: " . $con->error);
+}
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -47,6 +54,7 @@ $stmt->close();
             top: 1rem;
             right: 1rem;
             z-index: 1100;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="profile.css">
@@ -55,7 +63,7 @@ $stmt->close();
 
 <body>
     <div class="container">
-        <p class="container-name">Welcome, <?= htmlspecialchars($first_name) ?>!</p>
+        <div class="container-name">Welcome, <?= htmlspecialchars($first_name) ?>!</div>
     </div>
     <p>Username: <strong><?= htmlspecialchars($username) ?></strong></p>
     <div class="container-table">
@@ -76,7 +84,9 @@ $stmt->close();
                 <tbody>
                     <?php foreach ($characters as $char): ?>
                         <tr>
-                            <td><?= htmlspecialchars($char['character_name']) ?></td>
+                            <td title="<?= htmlspecialchars($char['character_name']) ?>">
+                                <?= htmlspecialchars(shortenName($char['character_name'])) ?>
+                            </td>
                             <td><?= htmlspecialchars($char['level']) ?></td>
                             <td><?= htmlspecialchars($char['alignment']) ?></td>
                             <td><?= htmlspecialchars($char['character_class']) ?></td>
@@ -121,7 +131,7 @@ $stmt->close();
                                 <input type="hidden" name="id" id="char-id">
                                 <div class="mb-3">
                                     <label for="char-name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" name="name" id="char-name" required>
+                                    <input type="text" class="form-control" name="name" id="char-name" value="<?= htmlspecialchars(shortenName($row['character_name'])) ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="char-level" class="form-label">Level</label>
@@ -234,7 +244,7 @@ $stmt->close();
 
         <?php endif; ?>
     </div>
-    <div class="navbar">
+    <nav class="navbar">
         <a href="home-page.php" class="nav-icon">
             <img src="./img/home.png" alt="Home" />
         </a>
@@ -244,7 +254,7 @@ $stmt->close();
         <a href="profile.php" class="nav-icon">
             <img src="./img/user.png" alt="Profil" />
         </a>
-    </div>
+    </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.querySelectorAll('.edit-btn').forEach(button => {

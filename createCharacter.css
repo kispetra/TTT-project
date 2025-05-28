@@ -1,0 +1,120 @@
+/* Opšti stil */
+body {
+    font-family: 'Cardo', serif;
+    background: url('./img/old-parchment-texture.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #4b2e1e;
+    padding-bottom: 80px;
+}
+
+/* Centriranje forme */
+.modal-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Kontejner forme */
+.character-form-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Naslov */
+.modal-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    color: #5c4033;
+    margin-bottom: 30px;
+}
+
+/* Labela */
+label {
+    color: #5c4033;
+    font-weight: bold;
+}
+
+/* Inputi i selecti */
+input.form-control,
+select.form-select {
+    border-color: #5c4033;
+    color: #3e2a1e;
+    background-color: #f9f6f1;
+    border-radius: 10px;
+}
+
+/* Dugmad unutar input grupa */
+.input-group .btn {
+    border-color: #5c4033;
+    background-color: rgba(182, 159, 138, 0.4);
+    color: #3e2a1e;
+}
+
+.input-group .btn:hover {
+    background-color: rgba(182, 159, 138, 0.6);
+}
+
+/* Dugme za submit */
+.btn-next {
+    background-color: rgba(182, 159, 138, 0.6);
+    border: none;
+    color: #3e2a1e;
+    font-weight: bold;
+}
+
+.btn-next:hover {
+    background-color: rgba(182, 159, 138, 0.8);
+    color: #2e1f14;
+}
+
+/* Poruke */
+.alert {
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 12px;
+}
+
+/* Modal sadržaj */
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+}
+
+/* Dugmad u modalu */
+.background-btn,
+.species-btn {
+    font-family: 'Cardo', serif;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #f9f6f1;
+    color: #4b2e1e;
+    border: 1px solid #5c4033;
+}
+
+.background-btn:hover,
+.species-btn:hover {
+    background-color: rgba(182, 159, 138, 0.3);
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .character-form-container {
+        padding: 15px;
+    }
+
+    input.form-control,
+    select.form-select {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
