@@ -7,11 +7,9 @@ if (isset($_SESSION['success_msg'])) {
     unset($_SESSION['success_msg']);
 }
 require_once 'db.php';
-
 function shortenName($name) {
-    return mb_strlen($name) > 10 ? mb_substr($name, 0, 10) . '...' : $name;
+    return mb_strlen($name) > 30 ? mb_substr($name, 0, 30) . '...' : $name;
 }
-
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
@@ -57,28 +55,41 @@ $stmt->close();
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="profile.css">
 </head>
 
 
-<body>
-    <div class="container">
-        <div class="container-name">Welcome, <?= htmlspecialchars($first_name) ?>!</div>
+<body class="bg-light">
+    <div class="profile-menu dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header"><?= htmlspecialchars($first_name) ?></h6></li>
+            <li><a class="dropdown-item" href="./edit-profile.php">Edit Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" onclick="logout()">Logout</a></li>
+        </ul>
     </div>
-    <p>Username: <strong><?= htmlspecialchars($username) ?></strong></p>
-    <div class="container-table">
-        <h4>Your Characters</h4>
+    <div class="container">
+        <h1 class="fw-body">Welcome, <?= htmlspecialchars($first_name) ?>!</h1>
+    </div>
+    
+    <div class="bg-white p-4 rounded shadow-sm">
+        <h4 class="text-character">Your Characters</h4>
         <?php if (empty($characters)): ?>
-            <p>You haven't created any characters yet.</p>
+            <p class="text-muted">You haven't created any characters yet.</p>
         <?php else: ?>
-            <table class="table table-bordered mt-3">
-                <thead>
+            <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded">
+                <thead class="table-dark">
                     <tr>
                         <th>Name</th>
                         <th>Level</th>
-                        <th>Alignment</th>
                         <th>Class</th>
-                        <th>Update</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,11 +99,10 @@ $stmt->close();
                                 <?= htmlspecialchars(shortenName($char['character_name'])) ?>
                             </td>
                             <td><?= htmlspecialchars($char['level']) ?></td>
-                            <td><?= htmlspecialchars($char['alignment']) ?></td>
                             <td><?= htmlspecialchars($char['character_class']) ?></td>
-                            <td>
+                            <td class="action-buttons">
                                 <button
-                                    class="btn btn-sm btn-custom edit-btn"
+                                    class="edit-btn"
                                     data-name="<?= htmlspecialchars($char['character_name']) ?>"
                                     data-level="<?= htmlspecialchars($char['level']) ?>"
                                     data-alignment="<?= htmlspecialchars($char['alignment']) ?>"
@@ -107,7 +117,7 @@ $stmt->close();
                                 </button>
 
                                 <button
-                                    class="btn btn-sm btn-custom info-btn"
+                                    class="info-btn"
                                     data-id="<?= $char['character_id'] ?>"
                                     data-bs-toggle="modal"
                                     data-bs-target="#infoModal">
@@ -118,6 +128,7 @@ $stmt->close();
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
             <!-- Edit Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -352,6 +363,11 @@ $stmt->close();
                 toggleSubspeciesField(this.value);
             });
         });
+
+         function logout() {
+            localStorage.removeItem("token")
+            window.location.href = "./login.php"
+        }
     </script>
 
 
