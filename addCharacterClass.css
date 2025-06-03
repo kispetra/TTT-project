@@ -18,6 +18,14 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     max-width: 600px;
 }
+.class-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid #bda271;
+    background-color: #fff;
+}
 
 label {
     color: #5c4033;
@@ -32,14 +40,15 @@ label {
     box-shadow: none;
 }
 
-.btn-primary {
+.btn-next {
     background-color: rgba(182, 159, 138, 0.6);
     border: none;
     transition: background-color 0.3s ease;
     color: #3e2a1e;
+    font-weight: bold;
 }
 
-.btn-primary:hover {
+.btn-next:hover {
     background-color: rgba(182, 159, 138, 0.8);
 }
 .class-list {
@@ -64,7 +73,15 @@ label {
 .class-option.selected {
     border-color: #d4af37;
     background-color: #fff8e1;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+    transform: scale(1.02);
+    transition: all 0.3s ease;
 }
+.class-option.selected .class-icon {
+    border-color: #d4af37;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
+}
+
 
 .class-option h5 {
     margin-bottom: 8px;
@@ -77,5 +94,11 @@ label {
     font-family: 'Cardo', serif;
     color: #3e2a1e;
     font-size: 0.95rem;
+}
+
+.alert {
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 12px;
 }
 

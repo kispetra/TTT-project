@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
                     <?php
                     $all_species = [
                         "Aasimar",
-                        "Dragoborn",
+                        "Dragonborn",
                         "Dwarf",
                         "Elf",
                         "Gnome",
@@ -219,7 +219,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
             const list = subspeciesMap[chosen] || null;
 
             if (list) {
-                subsSelect.innerHTML = '<option value="">— select —</option>' +
+                subsSelect.innerHTML = '<option value=""> Select subspecies </option>' +
                     list.map(s => `<option value="${s}">${s}</option>`).join('');
                 subsGroup.style.display = '';
                 subsSelect.required = true;
