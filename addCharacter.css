@@ -6,6 +6,12 @@ body {
     padding-bottom: 80px;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 .modal-header {
             border-bottom: 1px solid #dee2e6;
             margin-bottom: 15px;
@@ -26,10 +32,11 @@ label {
 
 .container {
     background-color: rgba(255, 255, 255, 0.85);
-    padding: 30px;
+    padding: 4vw;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    max-width: 600px;
+    width: 100%;
+    max-width: 700px;
 }
 
 .navbar {
@@ -100,13 +107,16 @@ label {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 5vw;
+    box-sizing: border-box;
 }
 
 /* FORMA STIL */
 .character-form-container {
     width: 100%;
-    max-width: 500px;
+    /* max-width: 600px; */
+    padding: 2vw;
+    box-sizing: border-box;
 }
 
 /* GUMB NEXT DESNO I STILIZIRAN */
@@ -122,15 +132,50 @@ label {
     color: #2e1f14;
 }
 
-/* RESPONSIVE ZA MOBITELE */
+.btn-back {
+    background-color: rgba(182, 159, 138, 0.6);
+    border: none;
+    color: #3e2a1e;
+    font-weight: bold;
+}
+
+.btn-back:hover {
+    background-color: rgba(182, 159, 138, 0.8);
+    color: #2e1f14;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem; 
+    margin-top: 1.5rem;
+
+}
+
 @media (max-width: 576px) {
     .character-form-container {
-        padding: 15px;
+        max-width: 95%;
+        padding: 20px 15px;
     }
 
     .modal-body input.form-control,
     .modal-body select.form-select {
         font-size: 16px;
         padding: 10px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-next, .btn-back {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 0.75rem;
+    }
+
+    .btn-next:last-child {
+        margin-bottom: 0;
     }
 }

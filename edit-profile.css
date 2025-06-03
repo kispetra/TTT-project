@@ -1,0 +1,106 @@
+/* Globalno */
+body {
+    font-family: 'Cardo', serif;
+    background-color: #f4f1ed;
+    color: #4e342e;
+    margin-bottom: 80px;
+}
+
+/* Naslov */
+h2 {
+    font-family: 'Cinzel', serif;
+    color: #d4af37;
+    text-shadow: 1px 1px 4px black;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Kontejner forme */
+.container {
+    background-color: #fff7f0;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    margin-top: 2rem;
+}
+
+/* Labela i inputi */
+.form-label {
+    font-weight: bold;
+    color: #6d4c41;
+}
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #a1887f;
+    background-color: #fefaf6;
+    color: #4e342e;
+    transition: border 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #a1887f;
+    box-shadow: 0 0 0 0.2rem rgba(198, 117, 41, 0.25);
+}
+
+/* Gumbi */
+.btn-primary {
+    background-color: #8d6e63;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #6d4c41;
+}
+
+.btn-secondary {
+    background-color: rgba(182, 159, 138, 0.6);
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(155, 90, 28, 0.8);
+    color: #2e1f14;
+}
+
+/* Alerti */
+.alert {
+    border-radius: 12px;
+    font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .form-control {
+        font-size: 0.95rem;
+        padding: 0.6rem 0.9rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .form-control {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+}

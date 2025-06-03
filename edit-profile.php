@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+// Handle back button with session-based fallback
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['back'])) {
+    $previous = $_SESSION['previous_page'] ?? 'profile.php'; // default fallback
+    header("Location: $previous");
+    exit;
+}
+
 require_once 'db.php';
 
 // Redirect to login if not authenticated
@@ -72,6 +80,9 @@ $stmt->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile – <?= htmlspecialchars($username) ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="edit-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+
 </head>
 <body class="p-4">
     <div class="container" style="max-width: 500px;">

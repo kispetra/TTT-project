@@ -137,8 +137,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
                     </select>
                 </div>
 
-                <div class="text-end mt-3">
-                <button type="submit" name="btnCreate"class="btn btn-next">Create Character</button>
+                <div class="buttons">
+                    <button type="button" class="btn btn-back" onclick="window.history.back();">Back</button>
+                    <button type="submit" name="btnCreate"class="btn btn-next">Create Character</button>
                 </div>      
             </form>
         </div>
