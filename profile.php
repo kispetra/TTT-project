@@ -7,7 +7,9 @@ if (isset($_SESSION['success_msg'])) {
     unset($_SESSION['success_msg']);
 }
 require_once 'db.php';
-
+function shortenName($name) {
+    return mb_strlen($name) > 30 ? mb_substr($name, 0, 30) . '...' : $name;
+}
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: login.php");
     exit;
@@ -24,6 +26,9 @@ $stmt->close();
 
 $characters = [];
 $stmt = $con->prepare("SELECT character_id, character_name, level, alignment, character_class, background, species, subspecies FROM characters WHERE user_id = ?");
+if (!$stmt) {
+    die("Prepare failed: " . $con->error);
+}
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -40,22 +45,41 @@ $stmt->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - <?= htmlspecialchars($username) ?></title>
+<<<<<<< HEAD
     <!-- Bootstrap CSS (required for dropdowns) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+=======
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #toastContainer {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1100;
+        }
+    </style>
+>>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="profile.css">
 </head>
 
 
+<<<<<<< HEAD
 <body>
     <div class="container mt-3">
+=======
+<body class="bg-light">
+>>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
     <div class="profile-menu dropdown">
         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
+<<<<<<< HEAD
             <li><h6 class="dropdown-header">Welcome, <?= htmlspecialchars($first_name) ?>!</h6></li>
             <li><a class="dropdown-item" href="/edit-profile.php">Edit Profile</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -72,10 +96,25 @@ $stmt->close();
 
 <div class="container-table">
         <h4>Your Characters</h4>
+=======
+            <li><h6 class="dropdown-header"><?= htmlspecialchars($first_name) ?></h6></li>
+            <li><a class="dropdown-item" href="./edit-profile.php">Edit Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" onclick="logout()">Logout</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1 class="fw-body">Welcome, <?= htmlspecialchars($first_name) ?>!</h1>
+    </div>
+    
+    <div class="bg-white p-4 rounded shadow-sm">
+        <h4 class="text-character">Your Characters</h4>
+>>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
         <?php if (empty($characters)): ?>
-            <p>You haven't created any characters yet.</p>
+            <p class="text-muted">You haven't created any characters yet.</p>
         <?php else: ?>
             <div class="table-responsive">
+<<<<<<< HEAD
                 <table class="table table-bordered mt-3">
                     <thead>
                         <tr>
@@ -124,6 +163,53 @@ $stmt->close();
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+=======
+            <table class="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Level</th>
+                        <th>Class</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($characters as $char): ?>
+                        <tr>
+                            <td title="<?= htmlspecialchars($char['character_name']) ?>">
+                                <?= htmlspecialchars(shortenName($char['character_name'])) ?>
+                            </td>
+                            <td><?= htmlspecialchars($char['level']) ?></td>
+                            <td><?= htmlspecialchars($char['character_class']) ?></td>
+                            <td class="action-buttons">
+                                <button
+                                    class="edit-btn"
+                                    data-name="<?= htmlspecialchars($char['character_name']) ?>"
+                                    data-level="<?= htmlspecialchars($char['level']) ?>"
+                                    data-alignment="<?= htmlspecialchars($char['alignment']) ?>"
+                                    data-class="<?= htmlspecialchars($char['character_class']) ?>"
+                                    data-background="<?= htmlspecialchars($char['background']) ?>"
+                                    data-species="<?= htmlspecialchars($char['species']) ?>"
+                                    data-subspecies="<?= htmlspecialchars($char['subspecies'] ?? '') ?>"
+                                    data-id="<?= $char['character_id'] ?? 0 ?>"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editModal">
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="info-btn"
+                                    data-id="<?= $char['character_id'] ?>"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#infoModal">
+                                    Info
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+>>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
             </div>
             <!-- Edit Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -138,7 +224,7 @@ $stmt->close();
                                 <input type="hidden" name="id" id="char-id">
                                 <div class="mb-3">
                                     <label for="char-name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" name="name" id="char-name" required>
+                                    <input type="text" class="form-control" name="name" id="char-name" value="<?= htmlspecialchars(shortenName($row['character_name'])) ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="char-level" class="form-label">Level</label>
@@ -251,7 +337,7 @@ $stmt->close();
 
         <?php endif; ?>
     </div>
-    <div class="navbar">
+    <nav class="navbar">
         <a href="home-page.php" class="nav-icon">
             <img src="./img/home.png" alt="Home" />
         </a>
@@ -261,7 +347,7 @@ $stmt->close();
         <a href="profile.php" class="nav-icon">
             <img src="./img/user.png" alt="Profil" />
         </a>
-    </div>
+    </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.querySelectorAll('.edit-btn').forEach(button => {
@@ -359,6 +445,11 @@ $stmt->close();
                 toggleSubspeciesField(this.value);
             });
         });
+
+         function logout() {
+            localStorage.removeItem("token")
+            window.location.href = "./login.php"
+        }
     </script>
 
 

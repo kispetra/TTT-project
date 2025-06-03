@@ -46,6 +46,7 @@ label {
     transition: background-color 0.3s ease;
     color: #3e2a1e;
     font-weight: bold;
+    font-weight: bold;
 }
 
 .btn-next:hover {

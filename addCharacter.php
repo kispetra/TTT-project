@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
 <body>
 
 <div class="modal-wrapper">
-    <div class="container character-form-container">
+<div class="container character-form-container">
     <h2 class="modal-header">Create Your Character</h2>
     <?php if (!empty($success_msg)): ?>
         <div class="alert alert-success"><?= htmlspecialchars($success_msg) ?></div>
