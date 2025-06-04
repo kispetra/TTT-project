@@ -4,6 +4,12 @@ body {
     margin: 0;
     background-color: #e8ddd0;
     font-family: 'Cardo', serif;
+    font-size: 20px;
+}
+
+.title-login{
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .main-container {

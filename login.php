@@ -62,7 +62,7 @@ $con->close();
         <img class="logo" src="./img/Dungeons-and-Dragons-logo.png" alt="Logo" loading="lazy">
 
         <div class="login-card">
-            <h5 class="text-center mb-3">Log In</h5>
+            <h5 class="text-center mb-3 title-login">Log In</h5>
             <form method="post" action="login.php">
                 <div class="mb-3">
                     <label for="emailOrUsername" class="form-label">Username or Email</label>

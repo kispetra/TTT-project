@@ -81,7 +81,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
                 ?>
             </div>
 
-            <div class="text-end mt-4">
+            <div class="buttons">
+                <button type="button" class="btn btn-back" onclick="window.history.back();">Back</button>
                 <button type="submit" name="next" class="btn btn-next" id="nextBtn">Next</button>
             </div>
         </form>

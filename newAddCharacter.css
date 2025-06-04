@@ -83,7 +83,6 @@ select.form-select:focus {
     background-color: #3e2b1c;
 }
 
-/* Alerts */
 .alert {
     font-size: 1.1rem;
     margin-bottom: 20px;
