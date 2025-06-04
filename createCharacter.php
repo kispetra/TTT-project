@@ -144,6 +144,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
             </form>
         </div>
 
+    <div class="modal fade" id="backgroundModal" tabindex="-1" aria-labelledby="backgroundModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Background</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php
+                    $backgrounds = [
+                        "Acolyte",
+                        "Artisan",
+                        "Charlatan",
+                        "Criminal",
+                        "Entertainer",
+                        "Farmer",
+                        "Guard",
+                        "Guide",
+                        "Hermit",
+                        "Merchant",
+                        "Noble",
+                        "Sage",
+                        "Sailor",
+                        "Scribe",
+                        "Soldier",
+                        "Wayfarer"
+                    ];
+                    foreach ($backgrounds as $background) {
+                        echo "<button type='button' class='btn btn-outline-dark w-100 mb-2 background-btn' data-value='$background'>$background</button>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="speciesModal" tabindex="-1" aria-labelledby="speciesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Species</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php
+                    $all_species = [
+                        "Aasimar",
+                        "Dragonborn",
+                        "Dwarf",
+                        "Elf",
+                        "Gnome",
+                        "Goliath",
+                        "Halfling",
+                        "Human",
+                        "Orc",
+                        "Tiefling"
+                    ];
+                    foreach ($all_species as $species) {
+                        echo "<button type='button' class='btn btn-outline-primary w-100 mb-2 species-btn' data-value='$species'>$species</button>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
           
     </div>
 
@@ -185,7 +249,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
             const list = subspeciesMap[chosen] || null;
 
             if (list) {
-                subsSelect.innerHTML = '<option value="">— select —</option>' +
+                subsSelect.innerHTML = '<option value=""> Select subspecies </option>' +
                     list.map(s => `<option value="${s}">${s}</option>`).join('');
                 subsGroup.style.display = '';
                 subsSelect.required = true;
