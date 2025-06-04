@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (isset($_SESSION['success_msg'])) {
+    echo "<div class='alert alert-success'>" . $_SESSION['success_msg'] . "</div>";
+    unset($_SESSION['success_msg']);
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     session_unset();
     session_destroy();

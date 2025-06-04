@@ -65,7 +65,7 @@ $stmt->close();
 
     <div class="container-2 d-flex justify-content-center gap-3">
         <a href="edit-profile.php" class="btn btn-outline-primary">Edit Profile</a>
-        <a href="logout.php" class="btn btn-outline-danger">Log Out</a>
+        <a href="#" onclick="confirmLogout()" class="btn btn-outline-danger">Log Out</a>
     </div>
 </div>
 
@@ -368,6 +368,13 @@ $stmt->close();
         function logout() {
             localStorage.removeItem("token")
             window.location.href = "./login.php"
+        }
+
+        function confirmLogout() {
+            const confirmed = confirm("Are you sure you want to log out?");
+            if (confirmed) {
+                window.location.href = 'logout.php'; // ispravno odjava fajl
+            }
         }
     </script>
 </body>

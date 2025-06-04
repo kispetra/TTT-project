@@ -32,9 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     <meta charset="UTF-8">
     <title>Create Character</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./addCharacter.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./addCharacter.css">
+    <link rel="stylesheet" href="./newAddCharacter.css">
     <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
 
@@ -64,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
                 </div>
 
                 <div class="mb-3">
-                    <label for="alignment" class="form-label">Alignment</label>
+                    <label for="alignment" class="form-label" id="form-alignment">Alignment</label>
                 <select class="form-select" id="alignment" name="alignment" required>
                     <option value="" disabled <?= !isset($_SESSION['alignment']) || $_SESSION['alignment'] === '' ? 'selected' : '' ?>>Choose alignment</option>
                     <option value="Lawful Good" <?= ($_SESSION['alignment'] ?? '') === 'Lawful Good' ? 'selected' : '' ?>>Lawful Good</option>
