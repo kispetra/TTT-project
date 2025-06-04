@@ -35,62 +35,7 @@
             color: #f0e2c6;
             animation: fadeIn 2s ease;
         }
-
-         .navbar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background-color: rgba(182, 159, 138, 0.6);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .nav-icon {
-            background: none;
-            border: none;
-            height: 36px;
-            width: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-icon img {
-            height: 28px;
-            width: 28px;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-icon img:hover {
-            transform: scale(1.2);
-        }
-
-        .nav-add {
-            background-color:rgb(199, 148, 72);
-            height: 65px;
-            width: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: translateY(-20px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .nav-add:hover {
-            transform: translateY(-25px) scale(1.1);
-        }
-
-        .nav-add img {
-            height: 30px;
-            width: 30px;
-        }
-
+        
         .dice-container {
             position: fixed;
             bottom: 90px;

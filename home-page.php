@@ -7,6 +7,7 @@
     <title>D&D Companion</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./home-page.css">
+    <link rel="stylesheet" href="./navbar.css">
 </head>
 
 <body>
