@@ -1,4 +1,3 @@
-/* Opšti stil */
 body {
     font-family: 'Cardo', serif;
     background: url('./img/old-parchment-texture.jpg') no-repeat center center fixed;
@@ -7,66 +6,91 @@ body {
     padding-bottom: 80px;
 }
 
-/* Centriranje forme */
-.modal-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
 }
 
-/* Kontejner forme */
-.character-form-container {
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    max-width: 600px;
-}
-
-/* Naslov */
-.modal-header {
-    text-align: center;
-    font-weight: bold;
-    font-size: 28px;
-    color: #5c4033;
-    margin-bottom: 30px;
-}
-
-/* Labela */
 label {
     color: #5c4033;
     font-weight: bold;
 }
 
-/* Inputi i selecti */
-input.form-control,
-select.form-select {
-    border-color: #5c4033;
-    color: #3e2a1e;
-    background-color: #f9f6f1;
-    border-radius: 10px;
+.container {
+    background-color: #f6f6f6;
+    padding: 5vw 3vw;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 850px;
+    min-height: 550px;
+    font-size: 22px;
+    margin-top: 2rem;
 }
 
-/* Dugmad unutar input grupa */
-.input-group .btn {
-    border-color: #5c4033;
-    background-color: rgba(182, 159, 138, 0.4);
-    color: #3e2a1e;
+.form-label {
+    color: #785c53;
+    font-size: 30px;
+    padding-top: 20px;
 }
 
-.input-group .btn:hover {
-    background-color: rgba(182, 159, 138, 0.6);
+.modal-header {
+    margin-bottom: 30px;
+    font-family: 'Cinzel', serif;
+    font-size: 2em;
+    color: #bd9b2a;
+    text-align: center;
+    text-shadow: 0.2px 0.2px 2px black;
+    padding: 0 0 20px;
 }
 
-/* Dugme za submit */
+.character-form-container {
+    font-size: 30px;
+    padding: 30px;
+}
+
+.modal-body input.form-control,
+.modal-body select.form-select {
+    font-size: 25px;
+    margin: 15px 0;
+    padding: 25px 20px;
+    border: 2px solid #a17b50;
+    border-radius: 30px;
+    background-color: #fffdf7;
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    font-size: 30px;
+}
+
+.alignment-btn {
+    font-family: 'Cardo', serif;
+}
+
+.modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 5vw 3vw;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
 .btn-next {
-    background-color: rgba(182, 159, 138, 0.6);
+    background-color: rgb(199, 148, 72);
     border: none;
     color: #3e2a1e;
     font-weight: bold;
+    padding: 12px 30px;
+    font-size: 25px;
+    border-radius: 30px;
+    margin-top: 20px;
 }
 
 .btn-next:hover {
@@ -75,10 +99,14 @@ select.form-select {
 }
 
 .btn-back {
-    background-color: rgba(182, 159, 138, 0.6);
+    background-color: rgb(208, 178, 133);
     border: none;
     color: #3e2a1e;
     font-weight: bold;
+    font-size: 25px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    margin-top: 20px;
 }
 
 .btn-back:hover {
@@ -89,52 +117,37 @@ select.form-select {
 .buttons {
     display: flex;
     justify-content: space-between;
-    gap: 1rem; /* razmak između gumbova ako ikada dođu bliže */
+    gap: 1rem;
     margin-top: 1.5rem;
-
 }
 
-/* Poruke */
-.alert {
-    border-radius: 10px;
-    font-size: 16px;
-    padding: 12px;
-}
 
-/* Modal sadržaj */
-.modal-content {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
-}
-
-/* Dugmad u modalu */
-.background-btn,
-.species-btn {
-    font-family: 'Cardo', serif;
-    text-align: left;
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 10px;
-    background-color: #f9f6f1;
-    color: #4b2e1e;
-    border: 1px solid #5c4033;
-}
-
-.background-btn:hover,
-.species-btn:hover {
-    background-color: rgba(182, 159, 138, 0.3);
-    cursor: pointer;
-}
-
-/* Responsive */
 @media (max-width: 576px) {
     .character-form-container {
-        padding: 15px;
+        max-width: 95%;
+        padding: 20px 15px;
     }
 
-    input.form-control,
-    select.form-select {
+    .modal-body input.form-control,
+    .modal-body select.form-select {
         font-size: 16px;
         padding: 10px;
     }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-next,
+    .btn-back {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 0.75rem;
+    }
+
+    .btn-next:last-child {
+        margin-bottom: 0;
+    }
 }
+

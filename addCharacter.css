@@ -6,125 +6,91 @@ body {
     padding-bottom: 80px;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
-    overflow: hidden;
-}
-
-.modal-header {
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 15px;
-            color: #5c4033;
+    overflow-y: auto;
 }
 
 label {
-     color: #5c4033;
-     font-weight: bold;
- }
+    color: #5c4033;
+    font-weight: bold;
+}
+
+.container {
+    background-color: #f6f6f6;
+    padding: 5vw 3vw;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 850px;
+    min-height: 550px;
+    font-size: 22px;
+    margin-top: 2rem;
+}
+
+.form-label {
+    color: #785c53;
+    font-size: 30px;
+    padding-top: 20px;
+}
+
+.modal-header {
+    margin-bottom: 30px;
+    font-family: 'Cinzel', serif;
+    font-size: 2em;
+    color: #bd9b2a;
+    text-align: center;
+    text-shadow: 0.2px 0.2px 2px black;
+    padding: 0 0 20px;
+}
+
+.character-form-container {
+    font-size: 30px;
+    padding: 30px;
+}
 
 .modal-body input.form-control,
 .modal-body select.form-select {
-     border-color: #5c4033;
-     color: #3e2a1e;
-     background-color: #f9f6f1;
- }
-
-.container {
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 4vw;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    max-width: 700px;
-}
-
-.navbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background-color: rgba(182, 159, 138, 0.6);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 10;
-}
-
-.nav-icon {
-    height: 36px;
-    width: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.nav-icon img {
-    height: 28px;
-    width: 28px;
-    transition: transform 0.3s ease;
-}
-
-.nav-icon img:hover {
-    transform: scale(1.2);
-}
-
-.nav-add {
-    background-color: rgb(199, 148, 72);
-    height: 65px;
-    width: 65px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(-20px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.nav-add:hover {
-    transform: translateY(-25px) scale(1.1);
-}
-
-.nav-add img {
-    height: 30px;
-    width: 30px;
+    font-size: 25px;
+    margin: 15px 0;
+    padding: 25px 20px;
+    border: 2px solid #a17b50;
+    border-radius: 30px;
+    background-color: #fffdf7;
 }
 
 .modal-content {
     background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
+    border-radius: 12px;
+    font-size: 30px;
 }
 
 .alignment-btn {
     font-family: 'Cardo', serif;
 }
 
-/* MODAL-STYLE WRAPPER ZA CENTRIRANJE */
 .modal-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 5vw;
+    padding: 5vw 3vw;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
-/* FORMA STIL */
-.character-form-container {
-    width: 100%;
-    /* max-width: 600px; */
-    padding: 2vw;
-    box-sizing: border-box;
-}
-
-/* GUMB NEXT DESNO I STILIZIRAN */
 .btn-next {
-    background-color: rgba(182, 159, 138, 0.6);
+    background-color: rgb(199, 148, 72);
     border: none;
     color: #3e2a1e;
     font-weight: bold;
+    padding: 12px 30px;
+    font-size: 25px;
+    border-radius: 30px;
+    margin-top: 20px;
 }
 
 .btn-next:hover {
@@ -133,10 +99,14 @@ label {
 }
 
 .btn-back {
-    background-color: rgba(182, 159, 138, 0.6);
+    background-color: rgb(208, 178, 133);
     border: none;
     color: #3e2a1e;
     font-weight: bold;
+    font-size: 25px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    margin-top: 20px;
 }
 
 .btn-back:hover {
@@ -147,10 +117,10 @@ label {
 .buttons {
     display: flex;
     justify-content: space-between;
-    gap: 1rem; 
+    gap: 1rem;
     margin-top: 1.5rem;
-
 }
+
 
 @media (max-width: 576px) {
     .character-form-container {
@@ -169,7 +139,8 @@ label {
         align-items: center;
     }
 
-    .btn-next, .btn-back {
+    .btn-next,
+    .btn-back {
         width: 100%;
         max-width: 300px;
         margin-bottom: 0.75rem;
@@ -179,3 +150,4 @@ label {
         margin-bottom: 0;
     }
 }
+
