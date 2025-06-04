@@ -52,6 +52,26 @@ label {
 .btn-next:hover {
     background-color: rgba(182, 159, 138, 0.8);
 }
+
+.btn-back {
+    background-color: rgba(182, 159, 138, 0.6);
+    border: none;
+    color: #3e2a1e;
+    font-weight: bold;
+}
+
+.btn-back:hover {
+    background-color: rgba(182, 159, 138, 0.8);
+    color: #2e1f14;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem; /* razmak između gumbova ako ikada dođu bliže */
+    margin-top: 1.5rem;
+
+}
 .class-list {
     display: flex;
     flex-direction: column;

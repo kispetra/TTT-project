@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
 </head>
 
 <body>
-
     <div class="container mt-5">
         <h2 class="modal-header">Choose a Class</h2>
 
