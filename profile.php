@@ -7,7 +7,8 @@ if (isset($_SESSION['success_msg'])) {
     unset($_SESSION['success_msg']);
 }
 require_once 'db.php';
-function shortenName($name) {
+function shortenName($name)
+{
     return mb_strlen($name) > 30 ? mb_substr($name, 0, 30) . '...' : $name;
 }
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -45,99 +46,62 @@ $stmt->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - <?= htmlspecialchars($username) ?></title>
-<<<<<<< HEAD
-    <!-- Bootstrap CSS (required for dropdowns) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-=======
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        #toastContainer {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1100;
-        }
-    </style>
->>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Cardo&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="navbar.css">
+
 </head>
 
-
-<<<<<<< HEAD
-<body>
-    <div class="container mt-3">
-=======
 <body class="bg-light">
->>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
-    <div class="profile-menu dropdown">
-        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-<<<<<<< HEAD
-            <li><h6 class="dropdown-header">Welcome, <?= htmlspecialchars($first_name) ?>!</h6></li>
-            <li><a class="dropdown-item" href="/edit-profile.php">Edit Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/logout.php">Logout</a></li>
-        </ul>
-    </div>
-
-    <p class="container-name">Welcome, <?= htmlspecialchars($first_name) ?>!</p>
-    <p>Username: <strong><?= htmlspecialchars($username) ?></strong></p>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<div class="container-table">
-        <h4>Your Characters</h4>
-=======
-            <li><h6 class="dropdown-header"><?= htmlspecialchars($first_name) ?></h6></li>
-            <li><a class="dropdown-item" href="./edit-profile.php">Edit Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" onclick="logout()">Logout</a></li>
-        </ul>
-    </div>
     <div class="container">
         <h1 class="fw-body">Welcome, <?= htmlspecialchars($first_name) ?>!</h1>
     </div>
-    
+
+    <div style="text-align: center; font-size: 15px; font-style: italic; color: #6d4c41; margin-top: 10px;">
+        "In this game, every choice matters and every story is unique."
+    </div>
+
+    <div class="container-2 d-flex justify-content-center gap-3">
+        <a href="edit-profile.php" class="btn btn-outline-primary">Edit Profile</a>
+        <a href="logout.php" class="btn btn-outline-danger">Log Out</a>
+    </div>
+</div>
+
+
+
+
     <div class="bg-white p-4 rounded shadow-sm">
-        <h4 class="text-character">Your Characters</h4>
->>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
+        <div class="text-character">Table of your characters</div>
         <?php if (empty($characters)): ?>
             <p class="text-muted">You haven't created any characters yet.</p>
         <?php else: ?>
             <div class="table-responsive">
-<<<<<<< HEAD
-                <table class="table table-bordered mt-3">
-                    <thead>
+                <div class="table-container-rounded">
+                <table class="table table-hover align-middle text-center ">
+                    <thead class="table-dark">
                         <tr>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Level</th>
-                                    <th>Class</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Level</th>
+                            <th>Class</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $index = 1; ?>
                         <?php foreach ($characters as $char): ?>
                             <tr>
-                                <td><?= htmlspecialchars($char['character_name']) ?></td>
+                                <td><?= $index++ ?></td>
+                                <td title="<?= htmlspecialchars($char['character_name']) ?>">
+                                    <?= htmlspecialchars(shortenName($char['character_name'])) ?>
+                                </td>
                                 <td><?= htmlspecialchars($char['level']) ?></td>
                                 <td><?= htmlspecialchars($char['character_class']) ?></td>
-                                <td>
+                                <td class="action-buttons">
                                     <button
-                                        class="btn btn-sm btn-custom edit-btn"
+                                        class="edit-btn"
                                         data-name="<?= htmlspecialchars($char['character_name']) ?>"
                                         data-level="<?= htmlspecialchars($char['level']) ?>"
                                         data-alignment="<?= htmlspecialchars($char['alignment']) ?>"
@@ -152,7 +116,7 @@ $stmt->close();
                                     </button>
 
                                     <button
-                                        class="btn btn-sm btn-custom info-btn"
+                                        class="info-btn"
                                         data-id="<?= $char['character_id'] ?>"
                                         data-bs-toggle="modal"
                                         data-bs-target="#infoModal">
@@ -162,54 +126,9 @@ $stmt->close();
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
+                
                 </table>
-=======
-            <table class="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Level</th>
-                        <th>Class</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($characters as $char): ?>
-                        <tr>
-                            <td title="<?= htmlspecialchars($char['character_name']) ?>">
-                                <?= htmlspecialchars(shortenName($char['character_name'])) ?>
-                            </td>
-                            <td><?= htmlspecialchars($char['level']) ?></td>
-                            <td><?= htmlspecialchars($char['character_class']) ?></td>
-                            <td class="action-buttons">
-                                <button
-                                    class="edit-btn"
-                                    data-name="<?= htmlspecialchars($char['character_name']) ?>"
-                                    data-level="<?= htmlspecialchars($char['level']) ?>"
-                                    data-alignment="<?= htmlspecialchars($char['alignment']) ?>"
-                                    data-class="<?= htmlspecialchars($char['character_class']) ?>"
-                                    data-background="<?= htmlspecialchars($char['background']) ?>"
-                                    data-species="<?= htmlspecialchars($char['species']) ?>"
-                                    data-subspecies="<?= htmlspecialchars($char['subspecies'] ?? '') ?>"
-                                    data-id="<?= $char['character_id'] ?? 0 ?>"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editModal">
-                                    Edit
-                                </button>
-
-                                <button
-                                    class="info-btn"
-                                    data-id="<?= $char['character_id'] ?>"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#infoModal">
-                                    Info
-                                </button>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
->>>>>>> 9eb06ab2c8f19ae5c6dfcb1c22ff68e3f65aa6c8
+                </div>
             </div>
             <!-- Edit Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -446,13 +365,11 @@ $stmt->close();
             });
         });
 
-         function logout() {
+        function logout() {
             localStorage.removeItem("token")
             window.location.href = "./login.php"
         }
     </script>
-
-
 </body>
 
 </html>
