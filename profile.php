@@ -92,7 +92,7 @@ $stmt->close();
                     <tbody>
                         <?php $index = 1; ?>
                         <?php foreach ($characters as $char): ?>
-                            <tr>
+                                <tr onclick="window.location.href='character.php?id=<?= $char['character_id'] ?>'" style="cursor: pointer;">
                                 <td><?= $index++ ?></td>
                                 <td title="<?= htmlspecialchars($char['character_name']) ?>">
                                     <?= htmlspecialchars(shortenName($char['character_name'])) ?>
@@ -114,7 +114,6 @@ $stmt->close();
                                         data-bs-target="#editModal">
                                         Edit
                                     </button>
-
                                     <button
                                         class="info-btn"
                                         data-id="<?= $char['character_id'] ?>"
@@ -124,6 +123,7 @@ $stmt->close();
                                     </button>
                                 </td>
                             </tr>
+
                         <?php endforeach; ?>
                     </tbody>
                 
@@ -270,7 +270,8 @@ $stmt->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
                 document.getElementById('char-id').value = button.dataset.id;
                 document.getElementById('char-name').value = button.dataset.name;
                 document.getElementById('char-level').value = button.dataset.level;
@@ -285,7 +286,8 @@ $stmt->close();
         });
 
         document.querySelectorAll('.info-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
                 const charId = button.dataset.id;
 
                 fetch(`get-character-info.php?id=${charId}`)
