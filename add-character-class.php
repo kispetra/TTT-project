@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     $_SESSION['user_id'] = $user_id;
 
     session_write_close();
-    header('Location: createCharacter.php');
+    header('Location: create-character.php');
     exit;
 }
 ?>
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     <title>Select Class</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./addCharacterClass.css">
+    <link rel="stylesheet" href="./add-character-class.css">
 </head>
 
 <body>
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
             <div class="alert alert-danger"><?= htmlspecialchars($error_msg) ?></div>
         <?php endif; ?>
 
-        <form method="post" action="addCharacterClass.php" id="classForm">
+        <form method="post" action="add-character-class.php" id="classForm">
             <div id="classAlert" class="alert alert-danger mt-3 d-none" role="alert">
                 Please select a class before proceeding.
             </div>
