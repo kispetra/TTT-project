@@ -51,9 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
 
         if ($stmt->execute()) {
             $_SESSION['success_msg'] = "Character successfully created!";
-
+            $_SESSION['created_character_id'] = $stmt->insert_id; 
             unset($_SESSION['character_name'], $_SESSION['level'], $_SESSION['alignment'], $_SESSION['character_class']);
-            header('Location: profile.php');
+            header('Location: add-base-stats.php');
             exit;
         } else {
             $error_msg = "Database error: " . $stmt->error;
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
     <meta charset="UTF-8">
     <title>Create Character</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./addCharacter.css">
+    <link rel="stylesheet" href="./createCharacter.css">
 </head>
 
 <body>
