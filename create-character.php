@@ -51,9 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
 
         if ($stmt->execute()) {
             $_SESSION['success_msg'] = "Character successfully created!";
-
+            $_SESSION['created_character_id'] = $stmt->insert_id; 
             unset($_SESSION['character_name'], $_SESSION['level'], $_SESSION['alignment'], $_SESSION['character_class']);
-            header('Location: profile.php');
+            header('Location: add-base-stats.php');
             exit;
         } else {
             $error_msg = "Database error: " . $stmt->error;
