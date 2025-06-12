@@ -1,4 +1,3 @@
-/* Globalno */
 body {
     font-family: 'Cardo', serif;
     background-color: #f4f1ed;
@@ -6,27 +5,23 @@ body {
     margin-bottom: 80px;
 }
 
-/* Naslov */
 h2 {
     font-family: 'Cinzel', serif;
-    color: #d4af37;
-    text-shadow: 1px 1px 4px black;
+    color: #bd9b2a;
+    text-shadow: 0.2px 0.2px 2px black;
     text-align: center;
     margin-bottom: 1.5rem;
 }
 
-/* Kontejner forme */
 .container {
-    background-color: #fff7f0;
+    background-color: #f6f6f6;
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     margin-top: 2rem;
 }
 
-/* Labela i inputi */
 .form-label {
-    font-weight: bold;
     color: #6d4c41;
 }
 
@@ -34,7 +29,7 @@ h2 {
     border-radius: 12px;
     border: 1px solid #a1887f;
     background-color: #fefaf6;
-    color: #4e342e;
+    color: #442c27;
     transition: border 0.3s ease;
 }
 
@@ -43,12 +38,12 @@ h2 {
     box-shadow: 0 0 0 0.2rem rgba(198, 117, 41, 0.25);
 }
 
-/* Gumbi */
 .btn-primary {
-    background-color: #8d6e63;
+    background-color: rgb(199, 148, 72);
+    color:#000;
     border: none;
     border-radius: 12px;
-    font-weight: bold;
+    font-size: 13px;
 }
 
 .btn-primary:hover {
@@ -59,8 +54,8 @@ h2 {
     background-color: rgba(182, 159, 138, 0.6);
     border: none;
     border-radius: 12px;
-    font-weight: bold;
     color: #000;
+    font-size: 13px;
 }
 
 .btn-secondary:hover {
@@ -68,13 +63,11 @@ h2 {
     color: #2e1f14;
 }
 
-/* Alerti */
 .alert {
     border-radius: 12px;
     font-size: 0.95rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .container {
         padding: 1.5rem;
