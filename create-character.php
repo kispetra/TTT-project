@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
     <meta charset="UTF-8">
     <title>Create Character</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./createCharacter.css">
+    <link rel="stylesheet" href="./create-character.css">
 </head>
 
 <body>
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
             <?php elseif (!empty($error_msg)): ?>
                 <div class="alert alert-danger"><?= htmlspecialchars($error_msg) ?></div>
             <?php endif; ?>
-            <form method="post" action="createCharacter.php">
+            <form method="post" action="create-character.php">
                 <input type="hidden" name="createCharacter" value="1">
 
 

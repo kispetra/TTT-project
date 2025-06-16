@@ -260,7 +260,7 @@ $stmt->close();
         <a href="home-page.php" class="nav-icon">
             <img src="./img/home.png" alt="Home" />
         </a>
-        <a href="addCharacter.php" class="nav-add">
+        <a href="add-character.php" class="nav-add">
             <img src="./img/add.png" alt="Dodaj" />
         </a>
         <a href="profile.php" class="nav-icon">
