@@ -6,7 +6,8 @@ if (!isset($_SESSION['user_id'])) {
     die("Not logged in");
 }
 
-$character_id = (int)$_GET['id'];
+$armor = $_POST['armor'] ?? 'None';
+$character_id = isset($_POST['character_id']) ? (int)$_POST['character_id'] : 0;
 $stmt = $con->prepare("SELECT * FROM characters WHERE character_id = ?");
 $stmt->bind_param("i", $character_id);
 $stmt->execute();
@@ -17,6 +18,20 @@ $stmt->close();
 $editable_stats = [
     'Farmer' => ['base_strength', 'base_constitution', 'base_wisdom'],
     'Charlatan' => ['base_charisma', 'base_dexterity', 'base_intelligence'],
+    'Acolyte'     => ['base_wisdom', 'base_charisma', 'base_intelligence'],
+    'Artisan'     => ['base_intelligence', 'base_wisdom', 'base_constitution'],
+    'Criminal'    => ['base_dexterity', 'base_charisma', 'base_intelligence'],
+    'Entertainer' => ['base_charisma', 'base_dexterity', 'base_strength'],
+    'Guard'       => ['base_strength', 'base_dexterity', 'base_constitution'],
+    'Guide'       => ['base_wisdom', 'base_dexterity', 'base_intelligence'],
+    'Hermit'      => ['base_wisdom', 'base_intelligence', 'base_constitution'],
+    'Merchant'    => ['base_charisma', 'base_intelligence', 'base_wisdom'],
+    'Noble'       => ['base_charisma', 'base_intelligence', 'base_wisdom'],
+    'Sage'        => ['base_intelligence', 'base_wisdom', 'base_charisma'],
+    'Sailor'      => ['base_strength', 'base_dexterity', 'base_constitution'],
+    'Scribe'      => ['base_intelligence', 'base_wisdom', 'base_charisma'],
+    'Soldier'     => ['base_strength', 'base_constitution', 'base_dexterity'],
+    'Wayfarer'    => ['base_wisdom', 'base_dexterity', 'base_constitution'],
 ];
 
 $background = $char['background'];
@@ -33,7 +48,7 @@ foreach ($allowed_stats as $stat) {
         $base_val = (int)$char[$stat];
 
         if ($new_val < $base_val || $new_val > $base_val + 3) {
-            continue; // sigurnosna provjera
+            continue; 
         }
 
         $increase = $new_val - $base_val;
@@ -50,6 +65,11 @@ foreach ($allowed_stats as $stat) {
 if ($total_increase > 3) {
     die("You can only increase up to 3 total stat points.");
 }
+
+$updates[] = "armor = ?";
+$params[] = $armor;
+$types .= 's';
+
 
 if (!empty($updates)) {
     $sql = "UPDATE characters SET " . implode(', ', $updates) . " WHERE character_id = ?";
