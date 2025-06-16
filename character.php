@@ -130,6 +130,14 @@ $base_ac = $armorACValues[$selected_armor] ?? (10 + $dexMod);
        <?php if ($isMonk): ?>
             <div class="mb-3">
                 <label class="form-label">Armor</label>
+                <select class="form-select" id="armor" name="armor" disabled>
+                    <option value="None" selected>No Armor (Monks cannot wear armor)</option>
+                </select>
+            </div>
+            <p><strong>Current Armor Class (AC):</strong> <span id="current-ac"><?= 0 ?></span></p>
+        <?php else: ?>
+            <div class="mb-3">
+                <label class="form-label">Armor</label>
                 <select class="form-select" id="armor" name="armor" required>
                     <option value="None" <?= ($selected_armor === 'None') ? 'selected' : '' ?>>No Armor</option>
                     <?php foreach ($armorACValues as $armorName => $ac): ?>
@@ -142,8 +150,55 @@ $base_ac = $armorACValues[$selected_armor] ?? (10 + $dexMod);
                 </select>
             </div>
             <p><strong>Current Armor Class (AC):</strong> <span id="current-ac"><?= $base_ac ?></span></p>
+
         <?php endif; ?>
 
+        <div class="mb-3">
+                    <label class="form-label">Weapons</label>
+                    <select class="form-select" id="weapons" name="weapons" required>
+                        <option value="" disabled selected>Choose Weapons</option>
+                        <option value="Club">Club</option>
+                        <option value="Dagger">Dagger</option>
+                        <option value="Greatclub">Greatclub</option>
+                        <option value="Handaxe">Handaxe</option>
+                        <option value="Javelin">Javelin</option>
+                        <option value="Light Hammer">Light Hammer</option>
+                        <option value="Mace">Mace</option>
+                        <option value="Quarterstaff">Quarterstaff</option>
+                        <option value="Sickle">Sickle</option>
+                        <option value="Spear">Spear</option>
+                        <option value="Dart">Dart</option>
+                        <option value="Light Crossbow">Light Crossbow</option>
+                        <option value="Shortbow">Shortbow</option>
+                        <option value="Sling">Sling</option>
+                        <option value="Battleaxe">Battleaxe</option>
+                        <option value="Flail">Flail</option>
+                        <option value="Glaive">Glaive</option>
+                        <option value="Greataxe">Greataxe</option>
+                        <option value="Greatsword">Greatsword</option>
+                        <option value="Halberd">Halberd</option>
+                        <option value="Lance">Lance</option>
+                        <option value="Longsword">Longsword</option>
+                        <option value="Maul">Maul</option>
+                        <option value="Morningstar">Morningstar</option>
+                        <option value="Pike">Pike</option>
+                        <option value="Rapier">Rapier</option>
+                        <option value="Scimitar">Scimitar</option>
+                        <option value="Shortsword">Shortsword</option>
+                        <option value="Trident">Trident</option>
+                        <option value="Warhammer">Warhammer</option>
+                        <option value="War Pick">War Pick</option>
+                        <option value="Whip">Whip</option>
+                        <option value="Blowgun">Blowgun</option>
+                        <option value="Hand Crossbow">Hand Crossbow</option>
+                        <option value="Heavy Crossbow">Heavy Crossbow</option>
+                        <option value="Longbow">Longbow</option>
+                        <option value="Musket">Musket</option>
+                        <option value="Pistol">Pistol</option>
+                    </select>
+                    <div id="weapon-damage" class="textsuccess"></div>
+                    <div id="weapon-properties" class="textsecondary"></div>
+                </div>
 
 
         <?php if (!empty($allowed_stats)): ?>
@@ -196,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
         pointsLeftDisplay.classList.toggle('text-danger', remaining === 0);
         pointsLeftDisplay.classList.toggle('text-primary', remaining > 0);
 
-        // Provjera: je li se promijenio neki stat ili armor
         const statsChanged = totalIncrease > 0;
         const armorChanged = armorSelect && armorSelect.value !== originalArmor;
 
@@ -212,7 +266,112 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateLimits();
+
+        // ==== Weapon Section ====
+    const weaponSelect = document.getElementById('weapons');
+    const damageDisplay = document.getElementById('weapon-damage');
+    const propertiesDisplay = document.getElementById('weapon-properties');
+
+    const weaponDamageMap = {
+        "Club": "1d4 Bludgeoning",
+        "Dagger": "1d4 Piercing",
+        "Greatclub": "1d8 Bludgeoning",
+        "Handaxe": "1d6 Slashing",
+        "Javelin": "1d6 Piercing",
+        "Light Hammer": "1d4 Bludgeoning",
+        "Mace": "1d6 Bludgeoning",
+        "Quarterstaff": "1d6 Bludgeoning",
+        "Sickle": "1d4 Slashing",
+        "Spear": "1d6 Piercing",
+        "Dart": "1d4 Piercing",
+        "Light Crossbow": "1d8 Piercing",
+        "Shortbow": "1d6 Piercing",
+        "Sling": "1d4 Bludgeoning",
+        "Battleaxe": "1d8 Slashing",
+        "Flail": "1d8 Bludgeoning",
+        "Glaive": "1d10 Slashing",
+        "Greataxe": "1d12 Slashing",
+        "Greatsword": "2d6 Slashing",
+        "Halberd": "1d10 Slashing",
+        "Lance": "1d12 Piercing",
+        "Longsword": "1d8 Slashing",
+        "Maul": "2d6 Bludgeoning",
+        "Morningstar": "1d8 Piercing",
+        "Pike": "1d10 Piercing",
+        "Rapier": "1d8 Piercing",
+        "Scimitar": "1d6 Slashing",
+        "Shortsword": "1d6 Piercing",
+        "Trident": "1d6 Piercing",
+        "Warhammer": "1d8 Bludgeoning",
+        "War Pick": "1d8 Piercing",
+        "Whip": "1d4 Slashing",
+        "Blowgun": "1 Piercing",
+        "Hand Crossbow": "1d6 Piercing",
+        "Heavy Crossbow": "1d10 Piercing",
+        "Longbow": "1d8 Piercing",
+        "Musket": "1d12 Piercing",
+        "Pistol": "1d10 Piercing"
+    };
+
+    const weaponProperties = {
+        "Club":["Light"],
+        "Dagger": ["Finesse", "Light", "Thrown"],
+        "Greatclub": ["Two-Handed"],
+        "Handaxe": ["Light", "Thrown"],
+        "Light Hammer": ["Light", "Thrown"],
+        "Mace": [""],
+        "Quarterstaff": ["Versatile"],
+        "Sickle": ["Light"],
+        "Spear": ["Thrown", "Versatile"],
+        "Dart": ["Finesse", "Thrown"],
+        "Light Crossbow": ["Ammunition", "Loading", "Two-Handed"],
+        "Shortbow": ["Ammunition", "Two-Handed"],
+        "Sling": ["Ammunition"],
+        "Flail": [""],
+        "Glaive": ["Heavy", "Reach", "Two-Handed"],
+        "Greataxe": ["Heavy","Two-Handed"],
+        "Greatsword": ["Heavy", "Two-Handed"],
+        "Halberd": ["Heavy", "Reach", "Two-Handed"],
+        "Lance": ["Heavy", "Reach", "Two-Handed"],
+        "Longsword": ["Versatile"],
+        "Maul": ["Heavy", "Two-Handed"],
+        "Morningstar": [""],
+        "Pike": ["Heavy", "Reach", "Two-Handed"],
+        "Rapier": ["Finesse"],
+        "Scimitar": ["Finesse", "Light"],
+        "Shortsword": ["Finesse", "Light"],
+        "Trident": ["Thrown", "Versatile"],
+        "Warhammer": ["Versatile"],
+        "War Pick": ["Versatile"],
+        "Whip": ["Finesse", "Reach"],
+        "Blowgun": ["Ammunition", "Loading"],
+        "Hand Crossbow": ["Ammunition", "Light", "Loading"],
+        "Heavy Crossbow": ["Ammunition", "Heavy", "Loading", "Two-Handed"],
+        "Longbow": ["Ammunition", "Heavy", "Two-Handed"],
+        "Musket": ["Ammunition", "Loading", "Two-Handed"],
+        "Pistol": ["Ammunition", "Loading"],
+    };
+
+    weaponSelect.addEventListener('change', () => {
+        const selectedWeapon = weaponSelect.value;
+
+        if (weaponDamageMap[selectedWeapon]) {
+            damageDisplay.innerHTML = `<strong>Damage:</strong> ${weaponDamageMap[selectedWeapon]}`;
+
+            const props = weaponProperties[selectedWeapon] || [];
+            if (props.length > 0) {
+                propertiesDisplay.innerHTML = `<strong>Properties:</strong> ${props.join(', ')}`;
+            } else {
+                propertiesDisplay.innerHTML = `<strong>Properties:</strong> None`;
+            }
+        } else {
+            damageDisplay.textContent = "";
+            propertiesDisplay.textContent = "";
+        }
+    });
+
 });
+
 </script>
 </body>
 </html> 
