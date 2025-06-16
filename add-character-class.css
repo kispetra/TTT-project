@@ -68,7 +68,7 @@ label {
 .buttons {
     display: flex;
     justify-content: space-between;
-    gap: 1rem; /* razmak između gumbova ako ikada dođu bliže */
+    gap: 1rem; 
     margin-top: 1.5rem;
 
 }

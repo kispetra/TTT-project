@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
         <img class="logo" src="./img/Dungeons-and-Dragons-logo.png" alt="Logo" loading="lazy">
 
         <div class="register-card">
-            <h5 class="text-center mb-3">Register</h5>
+            <div class="text-center mb-3 title-register">Register</div>
             <form method="post" action="register.php">
                 <div class="mb-3">
                     <label for="first_name" class="form-label">First Name</label>

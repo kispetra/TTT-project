@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     $_SESSION['user_id'] = $user_id;
 
     session_write_close();
-    header('Location: addCharacterClass.php');
+    header('Location: add-character-class.php');
     exit;
 }
 ?>
@@ -33,9 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
     <meta charset="UTF-8">
     <title>Create Character</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./addCharacter.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./addCharacter.css">
+    <link rel="stylesheet" href="./add-character.css">
     <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Cinzel:wght@600&display=swap" rel="stylesheet">
 </head>
 
@@ -49,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['next'])) {
                 <div class="alert alert-danger"><?= htmlspecialchars($error_msg) ?></div>
             <?php endif; ?>
 
-            <form method="post" action="addCharacter.php">
+            <form method="post" action="add-character.php">
 
                 <div class="modal-body">
                     <div class="mb-3">

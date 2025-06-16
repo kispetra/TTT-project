@@ -65,7 +65,7 @@ $stmt->close();
 
     <div class="container-2 d-flex justify-content-center gap-3">
         <a href="edit-profile.php" class="btn btn-outline-primary">Edit Profile</a>
-        <a href="logout.php" class="btn btn-outline-danger">Log Out</a>
+        <a href="#" onclick="confirmLogout()" class="btn btn-outline-danger">Log Out</a>
     </div>
 </div>
 
@@ -92,7 +92,7 @@ $stmt->close();
                     <tbody>
                         <?php $index = 1; ?>
                         <?php foreach ($characters as $char): ?>
-                            <tr>
+                                <tr onclick="window.location.href='character.php?id=<?= $char['character_id'] ?>'" style="cursor: pointer;">
                                 <td><?= $index++ ?></td>
                                 <td title="<?= htmlspecialchars($char['character_name']) ?>">
                                     <?= htmlspecialchars(shortenName($char['character_name'])) ?>
@@ -114,7 +114,6 @@ $stmt->close();
                                         data-bs-target="#editModal">
                                         Edit
                                     </button>
-
                                     <button
                                         class="info-btn"
                                         data-id="<?= $char['character_id'] ?>"
@@ -124,6 +123,7 @@ $stmt->close();
                                     </button>
                                 </td>
                             </tr>
+
                         <?php endforeach; ?>
                     </tbody>
                 
@@ -260,7 +260,7 @@ $stmt->close();
         <a href="home-page.php" class="nav-icon">
             <img src="./img/home.png" alt="Home" />
         </a>
-        <a href="addCharacter.php" class="nav-add">
+        <a href="add-character.php" class="nav-add">
             <img src="./img/add.png" alt="Dodaj" />
         </a>
         <a href="profile.php" class="nav-icon">
@@ -270,7 +270,8 @@ $stmt->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
                 document.getElementById('char-id').value = button.dataset.id;
                 document.getElementById('char-name').value = button.dataset.name;
                 document.getElementById('char-level').value = button.dataset.level;
@@ -285,7 +286,8 @@ $stmt->close();
         });
 
         document.querySelectorAll('.info-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
                 const charId = button.dataset.id;
 
                 fetch(`get-character-info.php?id=${charId}`)
@@ -368,6 +370,13 @@ $stmt->close();
         function logout() {
             localStorage.removeItem("token")
             window.location.href = "./login.php"
+        }
+
+        function confirmLogout() {
+            const confirmed = confirm("Are you sure you want to log out?");
+            if (confirmed) {
+                window.location.href = 'logout.php'; // ispravno odjava fajl
+            }
         }
     </script>
 </body>

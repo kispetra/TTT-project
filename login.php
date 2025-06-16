@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (isset($_SESSION['success_msg'])) {
+    echo "<div class='alert alert-success'>" . $_SESSION['success_msg'] . "</div>";
+    unset($_SESSION['success_msg']);
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     session_unset();
     session_destroy();
@@ -57,7 +62,7 @@ $con->close();
         <img class="logo" src="./img/Dungeons-and-Dragons-logo.png" alt="Logo" loading="lazy">
 
         <div class="login-card">
-            <h5 class="text-center mb-3">Log In</h5>
+            <h5 class="text-center mb-3 title-login">Log In</h5>
             <form method="post" action="login.php">
                 <div class="mb-3">
                     <label for="emailOrUsername" class="form-label">Username or Email</label>
