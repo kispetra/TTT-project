@@ -49,6 +49,16 @@ $armorACValues = getArmorACValues($dexMod, $wisMod, $isMonk);
 $selected_armor = $char['armor'] ?? 'None';
 $base_ac = $armorACValues[$selected_armor] ?? (10 + $dexMod);
 
+
+$allWeapons = ['None', 'Club', 'Dagger', 'Greatclub', 'Handaxe', 'Javelin', 'Light Hammer', 'Mace', 'Quarterstaff', 'Sickle', 'Spear', 'Dart', 
+                "Light Crossbow", "Shortbow", "Sling", "Battleaxe", "Flail", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", 
+                "Maul", "Morningstar", "Pike", "Rapier", "Scimitar", "Shortsword", "Trident", "Warhammer", "War Pick", "Whip", "Blowgun", "Hand Crossbow", 
+                "Heavy Crossbow", "Longbow", "Musket", "Pistol" ];
+
+if ($isMonk) {
+    array_unshift($allWeapons, 'Fist'); 
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +82,6 @@ $base_ac = $armorACValues[$selected_armor] ?? (10 + $dexMod);
         $editable_stats = [
             'Farmer' => ['base_strength', 'base_constitution', 'base_wisdom'],
             'Charlatan' => ['base_charisma', 'base_dexterity', 'base_intelligence'],
-            // other backgrounds
             'Acolyte'     => ['base_wisdom', 'base_charisma', 'base_intelligence'],
             'Artisan'     => ['base_intelligence', 'base_wisdom', 'base_constitution'],
             'Criminal'    => ['base_dexterity', 'base_charisma', 'base_intelligence'],
@@ -93,7 +102,7 @@ $base_ac = $armorACValues[$selected_armor] ?? (10 + $dexMod);
 
         function EnableStatFields($field, $char, $allowed_stats) {
             $value = (int)$char[$field];
-            $modifier = ($value < 10) ? ceil(($value - 10) / 2) : floor(($value - 10) / 2);
+            $modifier = abilityModifier($value);
             $prettyLabel = ucfirst(str_replace('base_', '', $field));
 
             if (in_array($field, $allowed_stats)) {
@@ -156,49 +165,17 @@ $base_ac = $armorACValues[$selected_armor] ?? (10 + $dexMod);
         <div class="mb-3">
                     <label class="form-label">Weapons</label>
                     <select class="form-select" id="weapons" name="weapons" required>
-                        <option value="" disabled selected>Choose Weapons</option>
-                        <option value="Club">Club</option>
-                        <option value="Dagger">Dagger</option>
-                        <option value="Greatclub">Greatclub</option>
-                        <option value="Handaxe">Handaxe</option>
-                        <option value="Javelin">Javelin</option>
-                        <option value="Light Hammer">Light Hammer</option>
-                        <option value="Mace">Mace</option>
-                        <option value="Quarterstaff">Quarterstaff</option>
-                        <option value="Sickle">Sickle</option>
-                        <option value="Spear">Spear</option>
-                        <option value="Dart">Dart</option>
-                        <option value="Light Crossbow">Light Crossbow</option>
-                        <option value="Shortbow">Shortbow</option>
-                        <option value="Sling">Sling</option>
-                        <option value="Battleaxe">Battleaxe</option>
-                        <option value="Flail">Flail</option>
-                        <option value="Glaive">Glaive</option>
-                        <option value="Greataxe">Greataxe</option>
-                        <option value="Greatsword">Greatsword</option>
-                        <option value="Halberd">Halberd</option>
-                        <option value="Lance">Lance</option>
-                        <option value="Longsword">Longsword</option>
-                        <option value="Maul">Maul</option>
-                        <option value="Morningstar">Morningstar</option>
-                        <option value="Pike">Pike</option>
-                        <option value="Rapier">Rapier</option>
-                        <option value="Scimitar">Scimitar</option>
-                        <option value="Shortsword">Shortsword</option>
-                        <option value="Trident">Trident</option>
-                        <option value="Warhammer">Warhammer</option>
-                        <option value="War Pick">War Pick</option>
-                        <option value="Whip">Whip</option>
-                        <option value="Blowgun">Blowgun</option>
-                        <option value="Hand Crossbow">Hand Crossbow</option>
-                        <option value="Heavy Crossbow">Heavy Crossbow</option>
-                        <option value="Longbow">Longbow</option>
-                        <option value="Musket">Musket</option>
-                        <option value="Pistol">Pistol</option>
-                    </select>
+                    <option value="" disabled <?= empty($char['weapons']) ? 'selected' : '' ?>>Choose Weapon</option>
+                    <?php foreach ($allWeapons as $weapon): ?>
+                        <option value="<?= $weapon ?>" <?= ($char['weapons'] === $weapon) ? 'selected' : '' ?>>
+                            <?= $weapon ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
                     <div id="weapon-damage" class="textsuccess"></div>
                     <div id="weapon-properties" class="textsecondary"></div>
                 </div>
+
 
 
         <?php if (!empty($allowed_stats)): ?>
@@ -217,9 +194,16 @@ $base_ac = $armorACValues[$selected_armor] ?? (10 + $dexMod);
 document.addEventListener('DOMContentLoaded', () => {
     const inputs = Array.from(document.querySelectorAll('.stat-input'));
     const submitBtn = document.getElementById('submitBtn');
+
     const pointsLeftDisplay = document.getElementById('pointsLeft');
     const armorSelect = document.getElementById('armor');
     const originalArmor = armorSelect ? armorSelect.value : null;
+    const characterLevel = <?= (int)$char['level'] ?>;
+
+    const weaponSelect = document.getElementById('weapons');
+    const damageDisplay = document.getElementById('weapon-damage');
+    const propertiesDisplay = document.getElementById('weapon-properties');
+    const originalWeapon = weaponSelect ? weaponSelect.value : null;
 
     function updateLimits() {
         const maxTotal = 3;
@@ -253,8 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const statsChanged = totalIncrease > 0;
         const armorChanged = armorSelect && armorSelect.value !== originalArmor;
+        const weaponChanged = weaponSelect && weaponSelect.value !== originalWeapon;
 
-        submitBtn.disabled = !(statsChanged || armorChanged);
+        submitBtn.disabled = !(statsChanged || armorChanged || weaponChanged);
     }
 
     inputs.forEach(input => {
@@ -265,14 +250,32 @@ document.addEventListener('DOMContentLoaded', () => {
         armorSelect.addEventListener('change', updateLimits);
     }
 
+    if (weaponSelect) {
+        weaponSelect.addEventListener('change', updateLimits);
+    }
+
     updateLimits();
 
-        // ==== Weapon Section ====
-    const weaponSelect = document.getElementById('weapons');
-    const damageDisplay = document.getElementById('weapon-damage');
-    const propertiesDisplay = document.getElementById('weapon-properties');
+    const currentACDisplay = document.getElementById('current-ac');
+
+    const dexMod = <?= $dexMod ?>;
+    const wisMod = <?= $wisMod ?>;
+    const isMonk = <?= $isMonk ? 'true' : 'false' ?>;
+
+    const armorACValues = <?= json_encode($armorACValues) ?>;
+
+    if (armorSelect) {
+        armorSelect.addEventListener('change', function () {
+            const selected = armorSelect.value;
+            const newAC = armorACValues[selected] ?? (10 + dexMod);
+            currentACDisplay.textContent = newAC;
+        });
+    }
+
 
     const weaponDamageMap = {
+        "None" : "None",
+        "Fist" : "1d6 Bludgeoning",
         "Club": "1d4 Bludgeoning",
         "Dagger": "1d4 Piercing",
         "Greatclub": "1d8 Bludgeoning",
@@ -314,6 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const weaponProperties = {
+        "None" : ["None"],
+        "Fist" : [""],  
         "Club":["Light"],
         "Dagger": ["Finesse", "Light", "Thrown"],
         "Greatclub": ["Two-Handed"],
@@ -355,7 +360,21 @@ document.addEventListener('DOMContentLoaded', () => {
     weaponSelect.addEventListener('change', () => {
         const selectedWeapon = weaponSelect.value;
 
-        if (weaponDamageMap[selectedWeapon]) {
+        if (selectedWeapon === "Fist") {
+            let damage;
+            if (characterLevel >= 17) {
+                damage = "1d12";
+            } else if (characterLevel >= 11) {
+                damage = "1d10";
+            } else if (characterLevel >= 5) {
+                damage = "1d8";
+            } else {
+                damage = "1d6";
+            }
+
+            damageDisplay.innerHTML = `<strong>Damage:</strong> ${damage}`;
+            propertiesDisplay.innerHTML = `<strong>Properties:</strong> Monk Only, Unarmed`;
+        } else if (weaponDamageMap[selectedWeapon]) {
             damageDisplay.innerHTML = `<strong>Damage:</strong> ${weaponDamageMap[selectedWeapon]}`;
 
             const props = weaponProperties[selectedWeapon] || [];
@@ -364,15 +383,42 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 propertiesDisplay.innerHTML = `<strong>Properties:</strong> None`;
             }
-        } else {
-            damageDisplay.textContent = "";
-            propertiesDisplay.textContent = "";
         }
     });
 
 });
 
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('#update-form'); // Prilagodi ako imaš drugačiji ID
+    const saveButton = document.querySelector('#submitBtn'); // Pretpostavka: button ima id="save-button"
+    const initialData = new FormData(form);
+
+    function formChanged() {
+        const currentData = new FormData(form);
+        for (let [key, value] of currentData.entries()) {
+            if (initialData.get(key) !== value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    form.addEventListener('input', () => {
+        if (formChanged()) {
+            saveButton.disabled = false;
+        } else {
+            saveButton.disabled = true;
+        }
+    });
+});
+</script>
+
+
+
+
 </body>
 </html> 
 

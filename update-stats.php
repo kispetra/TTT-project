@@ -7,6 +7,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $armor = $_POST['armor'] ?? 'None';
+$weapons = $_POST['weapons'] ?? null;
+
 $character_id = isset($_POST['character_id']) ? (int)$_POST['character_id'] : 0;
 $stmt = $con->prepare("SELECT * FROM characters WHERE character_id = ?");
 $stmt->bind_param("i", $character_id);
@@ -66,9 +68,19 @@ if ($total_increase > 3) {
     die("You can only increase up to 3 total stat points.");
 }
 
-$updates[] = "armor = ?";
-$params[] = $armor;
-$types .= 's';
+// Armor update
+if ($armor !== $char['armor']) {
+    $updates[] = "armor = ?";
+    $params[] = $armor;
+    $types .= 's';
+}
+
+// Weapon update
+if ($weapons !== null && $weapons !== $char['weapons']) {
+    $updates[] = "weapons = ?";
+    $params[] = $weapons;
+    $types .= 's';
+}
 
 
 if (!empty($updates)) {
