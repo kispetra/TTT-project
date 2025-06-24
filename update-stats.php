@@ -6,6 +6,11 @@ if (!isset($_SESSION['user_id'])) {
     die("Not logged in");
 }
 
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+
 $armor = $_POST['armor'] ?? 'None';
 $weapons = $_POST['weapons'] ?? null;
 
@@ -35,6 +40,9 @@ $editable_stats = [
     'Soldier'     => ['base_strength', 'base_constitution', 'base_dexterity'],
     'Wayfarer'    => ['base_wisdom', 'base_dexterity', 'base_constitution'],
 ];
+$charLevel = (int)$char['level'];
+
+$mayImprove = ($charLevel % 4 === 0);
 
 $background = $char['background'];
 $allowed_stats = $editable_stats[$background] ?? [];
@@ -45,43 +53,61 @@ $params = [];
 $types = '';
 
 foreach ($allowed_stats as $stat) {
-    if (isset($_POST[$stat])) {
-        $new_val = (int)$_POST[$stat];
-        $base_val = (int)$char[$stat];
+    if (!isset($_POST[$stat])) {
+        continue;
+    }
 
-        if ($new_val < $base_val || $new_val > $base_val + 3) {
-            continue; 
-        }
+    $new  = (int) $_POST[$stat];
+    $base = (int) $char[$stat];
 
-        $increase = $new_val - $base_val;
-        $total_increase += $increase;
+    if (!$mayImprove && $new !== $base) {
+        die('Base stats možeš povećati samo na razinama 4, 8, 12, 16 ili 20.');
+    }
 
-        if ($increase > 0) {
-            $updates[] = "$stat = ?";
-            $params[] = $new_val;
-            $types .= 'i';
-        }
+    if ($new < $base || $new > $base + 3) {
+        continue;
+    }
+
+    $increase        = $new - $base;
+    $total_increase += $increase;
+
+    if ($increase > 0) {
+        $updates[] = "$stat = ?";
+        $params[]  = $new;
+        $types    .= 'i';
     }
 }
+
 
 if ($total_increase > 3) {
     die("You can only increase up to 3 total stat points.");
 }
 
-// Armor update
 if ($armor !== $char['armor']) {
     $updates[] = "armor = ?";
-    $params[] = $armor;
-    $types .= 's';
+    $params[]  = $armor;
+    $types    .= 's';
 }
 
-// Weapon update
-if ($weapons !== null && $weapons !== $char['weapons']) {
+$weapon        = $_POST['weapons']            ?? '';
+$weapon_damage = $_POST['weapon_damage']     ?? '';
+$weapon_props  = $_POST['weapon_properties'] ?? '';
+
+if ($weapon !== $char['weapons']) {
     $updates[] = "weapons = ?";
-    $params[] = $weapons;
-    $types .= 's';
+    $params[]  = $weapon;
+    $types    .= 's';
 }
-
+if ($weapon_damage !== $char['weapon_damage']) {
+    $updates[] = "weapon_damage = ?";
+    $params[]  = $weapon_damage;
+    $types    .= 's';
+}
+if ($weapon_props !== $char['weapon_properties']) {
+    $updates[] = "weapon_properties = ?";
+    $params[]  = $weapon_props;
+    $types    .= 's';
+}
 
 if (!empty($updates)) {
     $sql = "UPDATE characters SET " . implode(', ', $updates) . " WHERE character_id = ?";
