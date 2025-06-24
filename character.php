@@ -316,12 +316,12 @@ $weapon_properties = $char['weapon_properties'] ?? '';
                     const weaponChanged = weaponSelect.value !== originalWeapon;
                     submitBtn.disabled = !(armorChanged || weaponChanged);
                 }
-
             }
 
             inputs.forEach(input => {
                 input.addEventListener('input', updateLimits);
             });
+
 
             if (armorSelect) {
                 armorSelect.addEventListener('change', updateLimits);

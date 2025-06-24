@@ -12,6 +12,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 $armor = $_POST['armor'] ?? 'None';
+$weapons = $_POST['weapons'] ?? null;
+
 $character_id = isset($_POST['character_id']) ? (int)$_POST['character_id'] : 0;
 $stmt = $con->prepare("SELECT * FROM characters WHERE character_id = ?");
 $stmt->bind_param("i", $character_id);
