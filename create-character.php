@@ -3,6 +3,82 @@ session_start();
 
 require_once 'db.php';
 
+$classData = [
+    "Barbarian" => [
+        "primary_ability" => "Strength",
+        "skill_proficiencies" => ["Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival"],
+        "starting_equipment" => ["Greataxe, 4 Handaxes, Explorer's Pack, 15 GP", "75 GP"],
+        "hit_point_die" => "d12",
+        "saving_throw_proficiencies" => ["Strength", "Constitution"],
+        "weapon_proficiencies" => ["Simple", "Martial"],
+        "armor_training" => ["Light armor", "Medium armor", "Shields"]
+    ],
+    "Bard" => [
+        "primary_ability" => "Charisma",
+        "skill_proficiencies" => ["Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception", "History", "Insight", "Intimidation", "Investigation", "Medicine", "Nature", "Perception", "Performance", "Persuasion", "Religion", "Sleight of Hand", "Stealth",  "Survival"],
+        "starting_equipment" => ["Leather Armor, 2 Daggers, Musical Instrument of your choice, Entertainer's Pack, 19 GP", "90 GP"],
+        "hit_point_die" => "d8",
+        "saving_throw_proficiencies" => ["Dexterity", "Charisma"],
+        "weapon_proficiencies" => "Simple",
+        "armor_training" => "Light armor"
+    ],
+    "Cleric" => [
+        "primary_ability" => "Wisdom",
+        "skill_proficiencies" => ["History", "Insight", "Medicine", "Persuasion", "Religion"],
+        "starting_equipment" => ["Chain Shirt, Shield, Mace, Holy Symbol, Priest's Pack, 7 GP", "110 GP"],
+        "hit_point_die" => "d8",
+        "saving_throw_proficiencies" => ["Wisdom", "Charisma"],
+        "weapon_proficiencies" => "Simple",
+        "armor_training" => ["Light armor", "Medium armor"]
+    ],
+    "Druid" => [
+        "primary_ability" => "Wisdom",
+        "skill_proficiencies" => ["Arcana", "Animal Handling","Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"],
+        "starting_equipment" => ["Leather Armor, Shield, Sickle, Druidic Focus (Quarterstaff), Explorer's Pack, Herbalism Kit, 9 GP", "50 GP"],
+        "hit_point_die" => "d8",
+        "saving_throw_proficiencies" => ["Intelligence", "Wisdom"],
+        "weapon_proficiencies" => "Simple",
+        "armor_training" => ["Light armor", "Shields"],
+        "tool_proficiencies" => "Herbalism Kit"
+    ],
+    "Fighter" => [
+        "primary_ability" => ["Strength", "Dexterity"],
+        "skill_proficiencies" => ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Persuasion", "Perception", "Survival"],
+        "starting_equipment" => ["Chain Mail, Greatsword, Flail, 8 Javelins, Dungeoneer's Pack, 4 GP", "Studded Leather Armor, Scimitar, Shortsword, Longbow, 20 Arows, Quiver, Dungeoneer's Pack, 11 GP", "155 GP"],
+        "hit_point_die" => "d10",
+        "saving_throw_proficiencies" => ["Strength", "Constitution"],
+        "weapon_proficiencies" => ["Simple", "Martial"],
+        "armor_training" => ["Light armor", "Medium Armor", "Heavy Armor", "Shields"]
+    ],
+    "Monk" => [
+        "primary_ability" => ["Dexterity", "Wisdom"],
+        "skill_proficiencies" => ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"],
+        "starting_equipment" => ["Spear, 5 Daggers, Artisan's Tools, Musical Instrument chosen for the tool proficiency above, Explorer's Pack, 11 GP", "50 GP"],
+        "hit_point_die" => "d8",
+        "saving_throw_proficiencies" => ["Strength", "Dexterity"],
+        "weapon_proficiencies" => ["Simple", "Martial weapons with Light property"],
+        "armor_training" => "None",
+        "tool_proficiencies" => ["Choose one type of Artisan's Tools", "Musical Instrument"]
+    ],
+    "Paladin" => [
+        "primary_ability" => ["Strength", "Charisma"],
+        "skill_proficiencies" => ["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion"],
+        "starting_equipment" => ["Chain Mail, Shield, Longsword, 6 Javelins, Holy Symbol, Priest's Pack, 9 GP", "150 GP"],
+        "hit_point_die" => "d10",
+        "saving_throw_proficiencies" => ["Wisdom", "Charisma"],
+        "weapon_proficiencies" => ["Simple", "Martial"],
+        "armor_training" => ["Light armor", "Medium Armor", "Heavy Armor", "Shields"],
+    ],
+
+    ////////////TU SI STALA !!!!!!!!!!!!!!!!
+    "Wizard" => [
+        "primary_ability" => "Intelligence",
+        "skill_proficiencies" => ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
+        "starting_equipment" => ["Quarterstaff", "Spellbook", "Component Pouch", "Scholar's Pack"]
+    ],
+    // Dodaj ostale klase po potrebi...
+];
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
     exit;
@@ -61,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['createCharacter'])) {
 
         $stmt->close();
     }
+
 }
 ?>
 

@@ -329,6 +329,23 @@ $weapon_properties = $char['weapon_properties'] ?? '';
 
             updateLimits();
 
+            const armorACValues = <?php echo json_encode($armorACValues); ?>;
+
+
+
+            // AC update handler
+            function updateArmorClass() {
+                const selected = armorSelect.value;
+                const ac = armorACValues[selected] ?? 10;
+                document.getElementById('current-ac').textContent = ac;
+            }
+
+            if (armorSelect) {
+                armorSelect.addEventListener('change', updateArmorClass);
+                updateArmorClass(); 
+            }
+
+
             // ==== Weapon Section ====
             const dmgDisp = document.getElementById('weaponDamageDisplay');
             const propsDisp = document.getElementById('weaponPropsDisplay');
