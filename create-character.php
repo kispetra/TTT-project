@@ -69,6 +69,25 @@ $classData = [
         "weapon_proficiencies" => ["Simple", "Martial"],
         "armor_training" => ["Light armor", "Medium Armor", "Heavy Armor", "Shields"],
     ],
+    "Ranger" => [
+        "primary_ability" => ["Dexterity", "Wisdom"],
+        "skill_proficiencies" => ["Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival"],
+        "starting_equipment" => ["Studded Leather Armor, Scimitar, Shortsword, Longbow, 20 Arrows, Quiver, Druidic Focus (sprig of mistletoe), Explorer's Pack, 7 GP", "150 GP"],
+        "hit_point_die" => "d10",
+        "saving_throw_proficiencies" => ["Strength", "Dexterity"],
+        "weapon_proficiencies" => ["Simple", "Martial"],
+        "armor_training" => ["Light armor", "Medium Armor", "Shields"],
+    ],
+     "Rogue" => [
+        "primary_ability" => ["Dexterity"],
+        "skill_proficiencies" => ["Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Persuasion", "Sleight of Hand", "Stealth"],
+        "starting_equipment" => ["Leather Armor, 2 Daggers, Shortsword, Shortbow, Longbow, 20 Arrows, Quiver, Thieves' Tools, Burglar's Pack, 8 GP", "100 GP"],
+        "hit_point_die" => "d8",
+        "saving_throw_proficiencies" => ["Dexterity", "Intelligence"],
+        "weapon_proficiencies" => ["Simple", "Martial weapons with Finesse or Light property"],
+        "armor_training" => ["Light armor"],
+        "tool_proficiencies" => ["Thieves' Tools"]
+    ],
 
     ////////////TU SI STALA !!!!!!!!!!!!!!!!
     "Wizard" => [
