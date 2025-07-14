@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btnCreate'])) {
                 </div>
                 <div class="buttons">
                     <button type="button" class="btn btn-back" onclick="window.history.back();">Back</button>
-                    <button type="submit" name="btnCreate" class="btn btn-next">Create Character</button>
+                    <button type="submit" name="btnCreate" class="btn btn-next">Add Base Stats</button>
                 </div>
             </form>
         </div>
